@@ -1,7 +1,7 @@
 # Personal Information
 name: "Aleksei Shchetinin"
 photo: "profile.jpeg"
-bio: "Product Manager with a background in  Data Science, crafting AI solutions in Berlin."
+bio: "Product Manager with a background in Data Science, crafting AI solutions in Berlin."
 
 # SEO Information
 seo:
@@ -16,24 +16,23 @@ theme:
     display: "Outfit"
     body: "Plus Jakarta Sans"
   colors:
-    highlight: "#4F46E5"
     brand:
       linkedin: "#0A66C2"
       cv: "#4F46E5"
       telegram: "#229ED9"
       instagram: "#E4405F"
       github_light: "#333333"
-      github_dark: "#ffffff"
+      github_dark: "#FFFFFF"
 
 # Layout
 layout:
+  card_width: "max-w-[28rem]"
   image_size:
     default: "w-36 h-36"
     sm: "w-40 h-40"
-  card_width: "max-w-[28rem]"
   spacing:
-    gap: "gap-8"
     padding: "p-8 sm:p-10"
+    gap: "gap-8"
 
 # Social Links
 social:
