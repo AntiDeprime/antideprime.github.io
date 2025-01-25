@@ -1,0 +1,54 @@
+# Personal Information
+name: "Aleksei Shchetinin"
+photo: "profile.jpeg"
+bio: "Product Manager with a background in  Data Science, crafting AI solutions in Berlin."
+
+# SEO Information
+seo:
+  title: "Personal Website"
+  description: "Personal website of Aleksei Shchetinin"
+  keywords: "Aleksei Shchetinin, Product Manager, AI, Machine Learning, Data Science, Berlin"
+  site_url: "https://alxy.sh"
+
+# Theme & Styling
+theme:
+  fonts:
+    display: "Outfit"
+    body: "Plus Jakarta Sans"
+  colors:
+    highlight: "#4F46E5"
+    brand:
+      linkedin: "#0A66C2"
+      cv: "#4F46E5"
+      telegram: "#229ED9"
+      instagram: "#E4405F"
+      github_light: "#333333"
+      github_dark: "#ffffff"
+
+# Layout
+layout:
+  image_size:
+    default: "w-36 h-36"
+    sm: "w-40 h-40"
+  card_width: "max-w-[28rem]"
+  spacing:
+    gap: "gap-8"
+    padding: "p-8 sm:p-10"
+
+# Social Links
+social:
+  linkedin:
+    url: "https://www.linkedin.com/in/aleksei-shchetinin/"
+    label: "in/aleksei-shchetinin"
+  cv:
+    url: "your-cv.pdf"
+    label: "Résumé"
+  telegram:
+    url: "https://t.me/antideprime"
+    label: "t.me/antideprime"
+  instagram:
+    url: "https://instagram.com/alxy_shch"
+    label: "instagram.com/alxy_shch"
+  github:
+    url: "https://github.com/antideprime"
+    label: "github.com/antideprime" 

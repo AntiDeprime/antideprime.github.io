@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+
+/* Theme transition */
+.theme-transition {
+  @apply transition-colors duration-200;
+}
+
+/* Remove transitions from text to prevent flash */
+h1, p {
+  transition: none;
+}
+
+/* Theme toggle */
+#theme-toggle {
+  @apply transition-opacity duration-200;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-mono-300 dark:bg-mono-700;
+  border-radius: 4px;
+}
+
+/* Smooth transitions - excluding text color for the name */
+* {
+  transition-property: background-color, border-color, transform, opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Specific transitions for icons and interactive elements */
+a svg, button {
+  transition-property: color, background-color, border-color, transform, opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Remove transition from heading */
+h1 {
+  transition: none;
+}
