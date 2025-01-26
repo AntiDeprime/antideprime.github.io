@@ -2,78 +2,101 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
 
-/* Theme transition */
-.theme-transition {
-  @apply transition-colors duration-200;
+    body {
+        @apply bg-mono-100 dark:bg-mono-950 text-mono-900 dark:text-mono-100 antialiased h-full font-body;
+    }
+
+    /* Remove transitions from static elements */
+    h1, p {
+        @apply transition-none;
+    }
 }
 
-/* Remove transitions from text to prevent flash */
-h1, p {
-  transition: none;
+@layer components {
+    /* Theme Toggle */
+    .theme-toggle-wrapper {
+        @apply fixed bottom-8 right-8 z-50 hidden sm:block opacity-75 hover:opacity-100 transition-opacity;
+    }
+
+    .theme-toggle-button {
+        @apply relative rounded-full w-12 h-6 bg-white dark:bg-mono-900 border border-mono-200 dark:border-mono-800 hover:border-mono-300 dark:hover:border-mono-700 shadow-sm hover:shadow-lg transition-all duration-300;
+    }
+
+    .theme-toggle-switch {
+        @apply w-5 h-5 bg-mono-100 dark:bg-mono-800 rounded-full absolute left-0.5 top-0.5 dark:translate-x-6 flex items-center justify-center transition-all duration-300;
+    }
+
+    /* Layout */
+    .main-content {
+        @apply min-h-full flex items-center justify-center p-4 sm:p-8;
+    }
+
+    .profile-card {
+        @apply w-full max-w-[28rem] mx-auto rounded-3xl border border-mono-200 dark:border-mono-800 bg-white dark:bg-mono-900 p-8 sm:p-10 shadow-sm hover:shadow-lg hover:border-mono-300 dark:hover:border-mono-700 transition-all duration-300;
+    }
+
+    .profile-image {
+        @apply w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover shadow-sm;
+    }
+
+    /* Typography */
+    .profile-name {
+        @apply font-display text-3xl sm:text-4xl font-medium mb-4 text-mono-900 dark:text-mono-100;
+    }
+
+    .profile-bio {
+        @apply text-mono-600 dark:text-mono-300 leading-relaxed mb-12 space-y-4 text-base sm:text-lg max-w-md;
+    }
+
+    /* Social Links */
+    .social-links-nav {
+        @apply flex flex-col gap-4 w-full;
+    }
+
+    .social-link {
+        @apply group relative flex items-center gap-5 pl-12 pr-5 py-3.5 rounded-xl bg-mono-100 dark:bg-mono-800 hover:bg-mono-200 dark:hover:bg-mono-700 transition-colors;
+    }
+
+    .social-link-icon-wrapper {
+        @apply absolute left-4 flex-none;
+    }
+
+    .social-link-icon {
+        @apply h-5 w-5 text-mono-500 dark:text-mono-400 transition-colors;
+    }
+
+    .social-link-text {
+        @apply font-display text-mono-700 group-hover:text-mono-900 dark:text-mono-300 dark:group-hover:text-mono-100 text-base sm:text-lg tracking-wide;
+    }
 }
 
-/* Theme toggle */
-#theme-toggle {
-  @apply transition-opacity duration-200;
-}
+@layer utilities {
+    /* Transitions */
+    * {
+        @apply transition-colors duration-150 ease-in-out;
+    }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
+    a svg, button {
+        @apply transition-all duration-300 ease-in-out;
+    }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        @apply w-2;
+    }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-mono-300 dark:bg-mono-700;
-  border-radius: 4px;
-}
+    ::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
 
-/* Smooth transitions - excluding text color for the name */
-* {
-  transition-property: background-color, border-color, transform, opacity;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-/* Specific transitions for icons and interactive elements */
-a svg, button {
-  transition-property: color, background-color, border-color, transform, opacity;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-/* Remove transition from heading */
-h1 {
-  transition: none;
-}
-
-/* Base styles */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Transitions */
-.transition-all {
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-}
-
-.transition-colors {
-    transition-property: background-color, border-color, color, fill, stroke;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-}
-
-.transition-opacity {
-    transition-property: opacity;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
+    ::-webkit-scrollbar-thumb {
+        @apply bg-mono-300 dark:bg-mono-700 rounded;
+    }
 }
 
 /* Print styles */
@@ -83,19 +106,14 @@ html {
     }
     
     body {
-        background: white !important;
-        color: black !important;
+        @apply bg-white text-black !important;
     }
     
     article {
-        border: none !important;
-        padding: 0 !important;
-        max-width: none !important;
-        margin: 0 !important;
-        box-shadow: none !important;
+        @apply border-none p-0 max-w-none m-0 shadow-none !important;
     }
     
     #theme-toggle {
-        display: none !important;
+        @apply hidden !important;
     }
 }
