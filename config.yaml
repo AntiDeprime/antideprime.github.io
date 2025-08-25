@@ -1,7 +1,8 @@
 # Personal Information
 name: "Aleksei Shchetinin"
 photo: "profile.jpeg"
-bio: "Product Manager with a background in Data Science, crafting AI solutions in Berlin."
+bio: "AI R&D @ Action1 · ex-Wrike"
+location: "📍 Berlin, Germany"
 
 # SEO Information
 seo:
@@ -39,15 +40,9 @@ social:
   linkedin:
     url: "https://www.linkedin.com/in/aleksei-shchetinin/"
     label: "in/aleksei-shchetinin"
-  cv:
-    url: "your-cv.pdf"
-    label: "Résumé"
   telegram:
     url: "https://t.me/antideprime"
     label: "t.me/antideprime"
-  instagram:
-    url: "https://instagram.com/alxy_shch"
-    label: "instagram.com/alxy_shch"
-  github:
-    url: "https://github.com/antideprime"
-    label: "github.com/antideprime" 
+  email:
+    url: "mailto:to@alxy.sh"
+    label: "to@alxy.sh"

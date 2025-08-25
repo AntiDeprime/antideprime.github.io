@@ -2,8 +2,7 @@
 from typing import Dict, Any
 import yaml
 import json
-from jinja2 import Environment, FileSystemLoader, Template
-import os
+from jinja2 import Environment, FileSystemLoader
 import sys
 
 def load_config(path: str = 'config.yaml') -> Dict[str, Any]:

@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     display: ['Outfit', 'system-ui', 'sans-serif'],
                     body: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
                 },
+                brand: {
+                    mail: '#EA4335', // Mail brand red
+                },
             }
         }
     };
@@ -65,4 +68,4 @@ document.addEventListener('DOMContentLoaded', () => {
             applyTheme(e.matches);
         }
     });
-}); 
+});
