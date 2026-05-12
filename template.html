@@ -8,14 +8,28 @@
     <meta name="description" content="{{ seo.description }}">
     <meta name="keywords" content="{{ seo.keywords }}">
     <meta name="author" content="{{ name }}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ seo.site_url }}/">
+    <link rel="icon" href="{{ photo }}" type="image/jpeg">
 
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ name }}">
     <meta property="og:title" content="{{ name }} - {{ seo.title }}">
     <meta property="og:description" content="{{ seo.description }}">
-    <meta property="og:image" content="{{ photo }}">
-    <meta property="og:url" content="{{ seo.site_url }}">
+    <meta property="og:image" content="{{ absolute_photo_url }}">
+    <meta property="og:image:secure_url" content="{{ absolute_photo_url }}">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="{{ seo.image_width }}">
+    <meta property="og:image:height" content="{{ seo.image_height }}">
+    <meta property="og:image:alt" content="{{ name }}">
+    <meta property="og:url" content="{{ seo.site_url }}/">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ name }} - {{ seo.title }}">
+    <meta name="twitter:description" content="{{ seo.description }}">
+    <meta name="twitter:image" content="{{ absolute_photo_url }}">
+    <meta name="twitter:image:alt" content="{{ name }}">
+    <meta name="theme-color" content="#0a0a0a">
 
     <title>{{ name }} - {{ seo.title }}</title>
 
@@ -25,41 +39,71 @@
 
     <!-- Styles -->
     <script>
-        window.tailwind = {
-            config: {
-                darkMode: 'class',
-                theme: {
-                    extend: {
-                        colors: {
-                            mono: {
-                                50: '#fafafa',
-                                100: '#f5f5f5',
-                                200: '#e5e5e5',
-                                300: '#d4d4d4',
-                                400: '#a3a3a3',
-                                500: '#737373',
-                                600: '#525252',
-                                700: '#404040',
-                                800: '#262626',
-                                900: '#171717',
-                                950: '#0a0a0a'
-                            }
-                        },
-                        fontFamily: {
-                            display: [{{ theme.fonts.display | tojson }}, 'system-ui', 'sans-serif'],
-                            body: [{{ theme.fonts.body | tojson }}, 'system-ui', 'sans-serif']
+        (function () {
+            try {
+                if (localStorage.getItem('theme') !== 'light') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (error) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        mono: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717',
+                            950: '#0a0a0a'
                         }
+                    },
+                    fontFamily: {
+                        display: [{{ theme.fonts.display | tojson }}, 'system-ui', 'sans-serif'],
+                        body: [{{ theme.fonts.body | tojson }}, 'system-ui', 'sans-serif']
                     }
                 }
             }
         };
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family={{ theme.fonts.display }}:wght@400;500;600&family={{ theme.fonts.body }}:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
     <!-- Scripts -->
     <script src="theme.js" defer></script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": {{ name | tojson }},
+            "url": {{ seo.site_url | tojson }},
+            "image": {{ absolute_photo_url | tojson }},
+            "description": {{ seo.description | tojson }},
+            "jobTitle": "AI R&D",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Berlin",
+                "addressCountry": "Germany"
+            },
+            "sameAs": [
+                {% for platform, data in social.items() if data and data.url.startswith('http') %}
+                {{ data.url | tojson }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+            ]
+        }
+    </script>
 </head>
 
 <body class="bg-mono-100 dark:bg-mono-950 text-mono-900 dark:text-mono-100 antialiased h-full font-body">
@@ -99,21 +143,21 @@
 
                 <div class="w-full">
                     <!-- Profile Header -->
-                    <h1 class="font-display text-3xl sm:text-4xl font-medium mb-4 text-mono-900 dark:text-mono-100">{{ name }}</h1>
+                    <h1 class="font-display text-3xl sm:text-4xl font-medium mb-3 text-mono-900 dark:text-mono-100">{{ name }}</h1>
 
                     <!-- Bio Section -->
-                    <div class="text-mono-600 dark:text-mono-300 leading-relaxed mb-6 space-y-4 text-base sm:text-lg max-w-md">
+                    <div class="text-mono-600 dark:text-mono-300 leading-relaxed mb-8 space-y-3 text-base sm:text-lg max-w-md">
                         <p class="mb-0 leading-snug">{{ bio }}<br><span class="text-mono-500 dark:text-mono-400 text-sm leading-snug">{{ location }}</span></p>
                     </div>
 
                     <!-- Social Links -->
-                    <nav class="flex flex-col gap-4 w-full" aria-label="Social links">
+                    <nav class="flex flex-col gap-3 w-full" aria-label="Social links">
                         {% for platform, data in social.items() %}
                         {% if data %}
                         {%- set is_external = data.url.startswith('http://') or data.url.startswith('https://') -%}
-                        <a 
-                            href="{{ data.url }}" 
-                            class="group relative flex items-center gap-5 pl-12 pr-5 py-3.5 rounded-xl bg-mono-100 dark:bg-mono-800 hover:bg-mono-200 dark:hover:bg-mono-700 transition-colors"{% if is_external %} target="_blank" rel="noopener noreferrer"{% endif %}
+                        <a
+                            href="{{ data.url }}"
+                            class="group relative flex min-h-12 items-center gap-5 rounded-xl bg-mono-100 py-3 pl-12 pr-5 transition-colors hover:bg-mono-200 dark:bg-mono-800 dark:hover:bg-mono-700"{% if is_external %} target="_blank" rel="noopener noreferrer"{% endif %}
                             aria-label="{{ platform }} profile"
                         >
                             <div class="absolute left-4 flex-none">

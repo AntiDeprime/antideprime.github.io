@@ -5,19 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Personal website of Aleksei Shchetinin">
+    <meta name="description" content="Aleksei Shchetinin is an AI R&D professional in Berlin, working on AI products at Action1 after Wrike.">
     <meta name="keywords" content="Aleksei Shchetinin, Product Manager, AI, Machine Learning, Data Science, Berlin">
     <meta name="author" content="Aleksei Shchetinin">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alxy.sh/">
+    <link rel="icon" href="profile.jpeg" type="image/jpeg">
 
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Aleksei Shchetinin - Personal Website">
-    <meta property="og:description" content="Personal website of Aleksei Shchetinin">
-    <meta property="og:image" content="profile.jpeg">
-    <meta property="og:url" content="https://alxy.sh">
+    <meta property="og:site_name" content="Aleksei Shchetinin">
+    <meta property="og:title" content="Aleksei Shchetinin - AI R&D in Berlin">
+    <meta property="og:description" content="Aleksei Shchetinin is an AI R&D professional in Berlin, working on AI products at Action1 after Wrike.">
+    <meta property="og:image" content="https://alxy.sh/profile.jpeg">
+    <meta property="og:image:secure_url" content="https://alxy.sh/profile.jpeg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="3024">
+    <meta property="og:image:height" content="4032">
+    <meta property="og:image:alt" content="Aleksei Shchetinin">
+    <meta property="og:url" content="https://alxy.sh/">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aleksei Shchetinin - AI R&D in Berlin">
+    <meta name="twitter:description" content="Aleksei Shchetinin is an AI R&D professional in Berlin, working on AI products at Action1 after Wrike.">
+    <meta name="twitter:image" content="https://alxy.sh/profile.jpeg">
+    <meta name="twitter:image:alt" content="Aleksei Shchetinin">
+    <meta name="theme-color" content="#0a0a0a">
 
-    <title>Aleksei Shchetinin - Personal Website</title>
+    <title>Aleksei Shchetinin - AI R&D in Berlin</title>
 
     <!-- Preload Critical Resources -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Plus Jakarta Sans:wght@400;500;600&display=swap" as="style">
@@ -25,41 +39,73 @@
 
     <!-- Styles -->
     <script>
-        window.tailwind = {
-            config: {
-                darkMode: 'class',
-                theme: {
-                    extend: {
-                        colors: {
-                            mono: {
-                                50: '#fafafa',
-                                100: '#f5f5f5',
-                                200: '#e5e5e5',
-                                300: '#d4d4d4',
-                                400: '#a3a3a3',
-                                500: '#737373',
-                                600: '#525252',
-                                700: '#404040',
-                                800: '#262626',
-                                900: '#171717',
-                                950: '#0a0a0a'
-                            }
-                        },
-                        fontFamily: {
-                            display: ["Outfit", 'system-ui', 'sans-serif'],
-                            body: ["Plus Jakarta Sans", 'system-ui', 'sans-serif']
+        (function () {
+            try {
+                if (localStorage.getItem('theme') !== 'light') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (error) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        mono: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717',
+                            950: '#0a0a0a'
                         }
+                    },
+                    fontFamily: {
+                        display: ["Outfit", 'system-ui', 'sans-serif'],
+                        body: ["Plus Jakarta Sans", 'system-ui', 'sans-serif']
                     }
                 }
             }
         };
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Plus Jakarta Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
     <!-- Scripts -->
     <script src="theme.js" defer></script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Aleksei Shchetinin",
+            "url": "https://alxy.sh",
+            "image": "https://alxy.sh/profile.jpeg",
+            "description": "Aleksei Shchetinin is an AI R&D professional in Berlin, working on AI products at Action1 after Wrike.",
+            "jobTitle": "AI R&D",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Berlin",
+                "addressCountry": "Germany"
+            },
+            "sameAs": [
+
+                "https://www.linkedin.com/in/aleksei-shchetinin/",
+
+                "https://t.me/antideprime"
+
+            ]
+        }
+    </script>
 </head>
 
 <body class="bg-mono-100 dark:bg-mono-950 text-mono-900 dark:text-mono-100 antialiased h-full font-body">
@@ -86,12 +132,12 @@
 
     <main class="min-h-full flex items-center justify-center p-4 sm:p-8">
         <article class="w-full max-w-[28rem] mx-auto rounded-3xl border border-mono-200 dark:border-mono-800 bg-white dark:bg-mono-900 p-8 sm:p-10 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-mono-300 dark:hover:border-mono-700">
-            <div class="flex flex-col items-center gap-8">
+            <div class="flex flex-col items-center gap-7 sm:gap-8">
                 <!-- Profile Image -->
                 <img
                     src="profile.jpeg"
                     alt="Aleksei Shchetinin"
-                    class="w-36 h-36 w-40 h-40 rounded-full object-cover shadow-sm"
+                    class="w-36 h-36 sm:w-40 sm:h-40 rounded-full object-cover shadow-sm"
                     width="160"
                     height="160"
                     loading="eager"
@@ -99,19 +145,19 @@
 
                 <div class="w-full">
                     <!-- Profile Header -->
-                    <h1 class="font-display text-3xl sm:text-4xl font-medium mb-4 text-mono-900 dark:text-mono-100">Aleksei Shchetinin</h1>
+                    <h1 class="font-display text-3xl sm:text-4xl font-medium mb-3 text-mono-900 dark:text-mono-100">Aleksei Shchetinin</h1>
 
                     <!-- Bio Section -->
-                    <div class="text-mono-600 dark:text-mono-300 leading-relaxed mb-6 space-y-4 text-base sm:text-lg max-w-md">
+                    <div class="text-mono-600 dark:text-mono-300 leading-relaxed mb-8 space-y-3 text-base sm:text-lg max-w-md">
                         <p class="mb-0 leading-snug">AI R&D @ <a href='https://www.action1.com' target='_blank' rel='noopener noreferrer' class='highlight-link action1-link'>Action1</a> · ex-<a href='https://www.wrike.com' target='_blank' rel='noopener noreferrer' class='highlight-link wrike-link'>Wrike</a><br><span class="text-mono-500 dark:text-mono-400 text-sm leading-snug">📍 Berlin, Germany</span></p>
                     </div>
 
                     <!-- Social Links -->
-                    <nav class="flex flex-col gap-4 w-full" aria-label="Social links">
+                    <nav class="flex flex-col gap-3 w-full" aria-label="Social links">
 
                         <a
                             href="https://www.linkedin.com/in/aleksei-shchetinin/"
-                            class="group relative flex items-center gap-5 pl-12 pr-5 py-3.5 rounded-xl bg-mono-100 dark:bg-mono-800 hover:bg-mono-200 dark:hover:bg-mono-700 transition-colors" target="_blank" rel="noopener noreferrer"
+                            class="group relative flex min-h-12 items-center gap-5 rounded-xl bg-mono-100 py-3 pl-12 pr-5 transition-colors hover:bg-mono-200 dark:bg-mono-800 dark:hover:bg-mono-700" target="_blank" rel="noopener noreferrer"
                             aria-label="linkedin profile"
                         >
                             <div class="absolute left-4 flex-none">
@@ -127,7 +173,7 @@
 
                         <a
                             href="https://t.me/antideprime"
-                            class="group relative flex items-center gap-5 pl-12 pr-5 py-3.5 rounded-xl bg-mono-100 dark:bg-mono-800 hover:bg-mono-200 dark:hover:bg-mono-700 transition-colors" target="_blank" rel="noopener noreferrer"
+                            class="group relative flex min-h-12 items-center gap-5 rounded-xl bg-mono-100 py-3 pl-12 pr-5 transition-colors hover:bg-mono-200 dark:bg-mono-800 dark:hover:bg-mono-700" target="_blank" rel="noopener noreferrer"
                             aria-label="telegram profile"
                         >
                             <div class="absolute left-4 flex-none">
@@ -143,7 +189,7 @@
 
                         <a
                             href="mailto:to@alxy.sh"
-                            class="group relative flex items-center gap-5 pl-12 pr-5 py-3.5 rounded-xl bg-mono-100 dark:bg-mono-800 hover:bg-mono-200 dark:hover:bg-mono-700 transition-colors"
+                            class="group relative flex min-h-12 items-center gap-5 rounded-xl bg-mono-100 py-3 pl-12 pr-5 transition-colors hover:bg-mono-200 dark:bg-mono-800 dark:hover:bg-mono-700"
                             aria-label="email profile"
                         >
                             <div class="absolute left-4 flex-none">

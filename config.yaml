@@ -6,10 +6,12 @@ location: "📍 Berlin, Germany"
 
 # SEO Information
 seo:
-  title: "Personal Website"
-  description: "Personal website of Aleksei Shchetinin"
+  title: "AI R&D in Berlin"
+  description: "Aleksei Shchetinin is an AI R&D professional in Berlin, working on AI products at Action1 after Wrike."
   keywords: "Aleksei Shchetinin, Product Manager, AI, Machine Learning, Data Science, Berlin"
   site_url: "https://alxy.sh"
+  image_width: 3024
+  image_height: 4032
 
 # Theme & Styling
 theme:
@@ -30,10 +32,10 @@ layout:
   card_width: "max-w-[28rem]"
   image_size:
     default: "w-36 h-36"
-    sm: "w-40 h-40"
+    sm: "sm:w-40 sm:h-40"
   spacing:
     padding: "p-8 sm:p-10"
-    gap: "gap-8"
+    gap: "gap-7 sm:gap-8"
 
 # Social Links
 social:

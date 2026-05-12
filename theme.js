@@ -1,25 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const applyTheme = (isDark) => {
-        document.documentElement.classList.toggle('dark', isDark);
+    const THEME_KEY = 'theme';
+    const DARK_THEME = 'dark';
+    const LIGHT_THEME = 'light';
+    const themeToggle = document.getElementById('theme-toggle');
+
+    const readStoredTheme = () => {
+        try {
+            return localStorage.getItem(THEME_KEY);
+        } catch (error) {
+            return null;
+        }
     };
 
-    const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const writeStoredTheme = (theme) => {
+        try {
+            localStorage.setItem(THEME_KEY, theme);
+        } catch (error) {
+            // Ignore blocked storage; the current page state still updates.
+        }
+    };
 
-    applyTheme(savedTheme === 'dark' || (!savedTheme && systemPrefersDark));
+    const applyTheme = (isDark) => {
+        document.documentElement.classList.toggle('dark', isDark);
+        document.documentElement.style.colorScheme = isDark ? DARK_THEME : LIGHT_THEME;
 
-    const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.setAttribute('aria-pressed', String(isDark));
+            themeToggle.setAttribute(
+                'aria-label',
+                isDark ? 'Switch to light mode' : 'Switch to dark mode',
+            );
+        }
+    };
+
+    const savedTheme = readStoredTheme();
+
+    applyTheme(savedTheme !== LIGHT_THEME);
+
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
             const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            applyTheme(isDark);
+            writeStoredTheme(isDark ? DARK_THEME : LIGHT_THEME);
         });
     }
-
-    const systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    systemThemeQuery.addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) {
-            applyTheme(e.matches);
-        }
-    });
 });
