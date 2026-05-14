@@ -1,6 +1,6 @@
 # Aleksei Shchetinin
 
-Aleksei Shchetinin works on AI R&D in Berlin, building AI products at Action1 after Wrike.
+I build and lead AI work at Action1, finding where intelligent systems can create real leverage, shaping how they work, and building solutions people can rely on.
 
 - Canonical URL: https://alxy.sh/
 - Location: Berlin, Germany

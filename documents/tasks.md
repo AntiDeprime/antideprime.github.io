@@ -20,3 +20,4 @@
 - 2026-05-12: Restored dark-first theme behavior, tightened profile card spacing, added canonical/social/JSON-LD metadata, and generated `robots.txt`/`sitemap.xml`.
 - 2026-05-12: Removed setup and contributor workflow details from `README.md`.
 - 2026-05-14: Added optimized metadata assets, static Tailwind build output, ProfilePage JSON-LD, GitHub profile link, `llms.txt`, and manifest/icon support.
+- 2026-05-14: Updated the profile summary copy to a first-person AI leadership positioning.
