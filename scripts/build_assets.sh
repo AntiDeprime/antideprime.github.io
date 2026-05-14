@@ -19,8 +19,7 @@ ffmpeg -y -hide_banner -loglevel error \
   "$ASSETS_DIR/og-image.jpg"
 
 # Derive PNG icons from the clean WebP avatar so Apple/EXIF/GPS metadata is not carried over.
-sips -s format png "$ASSETS_DIR/avatar.webp" --out "$TMP_DIR/icon-512.png" >/dev/null
-sips -z 512 512 "$TMP_DIR/icon-512.png" --out "$ASSETS_DIR/icon-512.png" >/dev/null
-sips -z 192 192 "$TMP_DIR/icon-512.png" --out "$ASSETS_DIR/icon-192.png" >/dev/null
-sips -z 180 180 "$TMP_DIR/icon-512.png" --out "$ASSETS_DIR/apple-touch-icon.png" >/dev/null
-sips -z 48 48 "$TMP_DIR/icon-512.png" --out "$ASSETS_DIR/favicon.png" >/dev/null
+ffmpeg -y -hide_banner -loglevel error -i "$ASSETS_DIR/avatar.webp" -vf "scale=512:512" -map_metadata -1 "$ASSETS_DIR/icon-512.png"
+ffmpeg -y -hide_banner -loglevel error -i "$ASSETS_DIR/avatar.webp" -vf "scale=192:192" -map_metadata -1 "$ASSETS_DIR/icon-192.png"
+ffmpeg -y -hide_banner -loglevel error -i "$ASSETS_DIR/avatar.webp" -vf "scale=180:180" -map_metadata -1 "$ASSETS_DIR/apple-touch-icon.png"
+ffmpeg -y -hide_banner -loglevel error -i "$ASSETS_DIR/avatar.webp" -vf "scale=48:48" -map_metadata -1 "$ASSETS_DIR/favicon.png"

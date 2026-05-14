@@ -33,11 +33,29 @@ jobs:
       - name: Sync dependencies
         run: uv sync --locked
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Install image tooling
+        run: sudo apt-get update && sudo apt-get install -y webp ffmpeg
+
+      - name: Generate optimized assets
+        run: ./scripts/build_assets.sh
+
+      - name: Build CSS
+        run: npm run build:css
+
       - name: Generate HTML
         run: uv run python generate.py
 
       - name: Ensure generated output is committed
-        run: git diff --exit-code -- index.html robots.txt sitemap.xml
+        run: git diff --exit-code -- index.html robots.txt sitemap.xml llms.txt site.webmanifest styles.css assets/
 
   build:
     if: github.event_name != 'pull_request'
@@ -58,13 +76,32 @@ jobs:
       - name: Sync dependencies
         run: uv sync --locked
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Install image tooling
+        run: sudo apt-get update && sudo apt-get install -y webp ffmpeg
+
+      - name: Generate optimized assets
+        run: ./scripts/build_assets.sh
+
+      - name: Build CSS
+        run: npm run build:css
+
       - name: Generate HTML
         run: uv run python generate.py
 
       - name: Prepare Pages artifact
         run: |
           mkdir -p site
-          cp index.html styles.css theme.js profile.jpeg robots.txt sitemap.xml site/
+          cp index.html styles.css theme.js robots.txt sitemap.xml llms.txt site.webmanifest site/
+          cp -R assets site/assets
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

@@ -19,4 +19,4 @@ uv run python generate.py
 The generated output includes `index.html`, optimized public image assets, `robots.txt`,
 `sitemap.xml`, `llms.txt`, and `site.webmanifest`.
 
-Asset generation expects the macOS `sips` tool plus `cwebp` and `ffmpeg` on `PATH`.
+Asset generation expects `cwebp` and `ffmpeg` on `PATH`.
