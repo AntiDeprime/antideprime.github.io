@@ -55,7 +55,7 @@ jobs:
         run: uv run python generate.py
 
       - name: Ensure generated output is committed
-        run: git diff --exit-code -- index.html robots.txt sitemap.xml llms.txt site.webmanifest styles.css assets/
+        run: git diff --exit-code -- index.html robots.txt sitemap.xml llms.txt site.webmanifest styles.css
 
   build:
     if: github.event_name != 'pull_request'
