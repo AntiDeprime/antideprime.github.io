@@ -7,7 +7,7 @@ location: "📍 Berlin, Germany"
 # Web Assets
 assets:
   source_photo: "profile.jpeg"
-  avatar: "assets/avatar.webp"
+  avatar: "assets/avatar-512.webp"
   og_image: "assets/og-image.jpg"
   favicon: "assets/favicon.png"
   apple_touch_icon: "assets/apple-touch-icon.png"
