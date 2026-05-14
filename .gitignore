@@ -25,6 +25,9 @@ wheels/
 venv/
 ENV/
 
+# Node
+node_modules/
+
 # IDE
 .idea/
 .vscode/
@@ -33,4 +36,7 @@ ENV/
 
 # OS
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Local browser tooling
+.playwright-mcp/

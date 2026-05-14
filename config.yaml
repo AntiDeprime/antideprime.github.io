@@ -1,8 +1,18 @@
 # Personal Information
 name: "Aleksei Shchetinin"
-photo: "profile.jpeg"
 bio: "AI R&D @ <a href='https://www.action1.com' target='_blank' rel='noopener noreferrer' class='highlight-link action1-link'>Action1</a> · ex-<a href='https://www.wrike.com' target='_blank' rel='noopener noreferrer' class='highlight-link wrike-link'>Wrike</a>"
+summary: "Aleksei Shchetinin works on AI R&D in Berlin, building AI products at Action1 after Wrike."
 location: "📍 Berlin, Germany"
+
+# Web Assets
+assets:
+  source_photo: "profile.jpeg"
+  avatar: "assets/avatar.webp"
+  og_image: "assets/og-image.jpg"
+  favicon: "assets/favicon.png"
+  apple_touch_icon: "assets/apple-touch-icon.png"
+  icon_192: "assets/icon-192.png"
+  icon_512: "assets/icon-512.png"
 
 # SEO Information
 seo:
@@ -10,8 +20,9 @@ seo:
   description: "Aleksei Shchetinin is an AI R&D professional in Berlin, working on AI products at Action1 after Wrike."
   keywords: "Aleksei Shchetinin, Product Manager, AI, Machine Learning, Data Science, Berlin"
   site_url: "https://alxy.sh"
-  image_width: 3024
-  image_height: 4032
+  locale: "en_US"
+  image_width: 1200
+  image_height: 630
 
 # Theme & Styling
 theme:
@@ -42,9 +53,25 @@ social:
   linkedin:
     url: "https://www.linkedin.com/in/aleksei-shchetinin/"
     label: "in/aleksei-shchetinin"
+    aria_label: "Aleksei Shchetinin on LinkedIn"
+    enabled: true
   telegram:
     url: "https://t.me/antideprime"
     label: "t.me/antideprime"
+    aria_label: "Aleksei Shchetinin on Telegram"
+    enabled: true
   email:
     url: "mailto:to@alxy.sh"
     label: "to@alxy.sh"
+    aria_label: "Email Aleksei Shchetinin"
+    enabled: true
+  github:
+    url: "https://github.com/antideprime"
+    label: "github.com/antideprime"
+    aria_label: "Aleksei Shchetinin on GitHub"
+    enabled: true
+  cv:
+    url: ""
+    label: "CV"
+    aria_label: "Aleksei Shchetinin CV"
+    enabled: false

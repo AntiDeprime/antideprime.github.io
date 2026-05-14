@@ -34,8 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const savedTheme = readStoredTheme();
+    const systemPrefersDark = window.matchMedia
+        ? window.matchMedia('(prefers-color-scheme: dark)').matches
+        : false;
 
-    applyTheme(savedTheme !== LIGHT_THEME);
+    applyTheme(savedTheme === DARK_THEME || (!savedTheme && systemPrefersDark));
 
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {

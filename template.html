@@ -10,15 +10,18 @@
     <meta name="author" content="{{ name }}">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ seo.site_url }}/">
-    <link rel="icon" href="{{ photo }}" type="image/jpeg">
+    <link rel="icon" href="{{ assets.favicon }}" type="image/png">
+    <link rel="apple-touch-icon" href="{{ assets.apple_touch_icon }}">
+    <link rel="manifest" href="site.webmanifest">
 
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="{{ seo.locale }}">
     <meta property="og:site_name" content="{{ name }}">
     <meta property="og:title" content="{{ name }} - {{ seo.title }}">
     <meta property="og:description" content="{{ seo.description }}">
-    <meta property="og:image" content="{{ absolute_photo_url }}">
-    <meta property="og:image:secure_url" content="{{ absolute_photo_url }}">
+    <meta property="og:image" content="{{ absolute_assets.og_image }}">
+    <meta property="og:image:secure_url" content="{{ absolute_assets.og_image }}">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="{{ seo.image_width }}">
     <meta property="og:image:height" content="{{ seo.image_height }}">
@@ -27,56 +30,32 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ name }} - {{ seo.title }}">
     <meta name="twitter:description" content="{{ seo.description }}">
-    <meta name="twitter:image" content="{{ absolute_photo_url }}">
+    <meta name="twitter:image" content="{{ absolute_assets.og_image }}">
     <meta name="twitter:image:alt" content="{{ name }}">
     <meta name="theme-color" content="#0a0a0a">
 
     <title>{{ name }} - {{ seo.title }}</title>
 
     <!-- Preload Critical Resources -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family={{ theme.fonts.display }}:wght@400;500;600&family={{ theme.fonts.body }}:wght@400;500;600&display=swap" as="style">
-    <link rel="preload" href="{{ photo }}" as="image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="{{ assets.avatar }}" as="image" type="image/webp" fetchpriority="high">
 
     <!-- Styles -->
     <script>
         (function () {
             try {
-                if (localStorage.getItem('theme') !== 'light') {
+                var savedTheme = localStorage.getItem('theme');
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
                     document.documentElement.classList.add('dark');
                 }
             } catch (error) {
-                document.documentElement.classList.add('dark');
-            }
-        })();
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        mono: {
-                            50: '#fafafa',
-                            100: '#f5f5f5',
-                            200: '#e5e5e5',
-                            300: '#d4d4d4',
-                            400: '#a3a3a3',
-                            500: '#737373',
-                            600: '#525252',
-                            700: '#404040',
-                            800: '#262626',
-                            900: '#171717',
-                            950: '#0a0a0a'
-                        }
-                    },
-                    fontFamily: {
-                        display: [{{ theme.fonts.display | tojson }}, 'system-ui', 'sans-serif'],
-                        body: [{{ theme.fonts.body | tojson }}, 'system-ui', 'sans-serif']
-                    }
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.add('dark');
                 }
             }
-        };
+        })();
     </script>
     <link href="https://fonts.googleapis.com/css2?family={{ theme.fonts.display }}:wght@400;500;600&family={{ theme.fonts.body }}:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -84,25 +63,7 @@
     <!-- Scripts -->
     <script src="theme.js" defer></script>
     <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Person",
-            "name": {{ name | tojson }},
-            "url": {{ seo.site_url | tojson }},
-            "image": {{ absolute_photo_url | tojson }},
-            "description": {{ seo.description | tojson }},
-            "jobTitle": "AI R&D",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Berlin",
-                "addressCountry": "Germany"
-            },
-            "sameAs": [
-                {% for platform, data in social.items() if data and data.url.startswith('http') %}
-                {{ data.url | tojson }}{% if not loop.last %},{% endif %}
-                {% endfor %}
-            ]
-        }
+        {{ json_ld | tojson }}
     </script>
 </head>
 
@@ -133,12 +94,13 @@
             <div class="flex flex-col items-center {{ layout.spacing.gap }}">
                 <!-- Profile Image -->
                 <img
-                    src="{{ photo }}"
+                    src="{{ assets.avatar }}"
                     alt="{{ name }}"
                     class="{{ layout.image_size.default }} {{ layout.image_size.sm }} rounded-full object-cover shadow-sm"
                     width="160"
                     height="160"
                     loading="eager"
+                    fetchpriority="high"
                 >
 
                 <div class="w-full">
@@ -148,17 +110,17 @@
                     <!-- Bio Section -->
                     <div class="text-mono-600 dark:text-mono-300 leading-relaxed mb-8 space-y-3 text-base sm:text-lg max-w-md">
                         <p class="mb-0 leading-snug">{{ bio }}<br><span class="text-mono-500 dark:text-mono-400 text-sm leading-snug">{{ location }}</span></p>
+                        <p class="text-sm leading-relaxed text-mono-500 dark:text-mono-400">{{ summary }}</p>
                     </div>
 
                     <!-- Social Links -->
                     <nav class="flex flex-col gap-3 w-full" aria-label="Social links">
-                        {% for platform, data in social.items() %}
-                        {% if data %}
+                        {% for platform, data in social_links.items() %}
                         {%- set is_external = data.url.startswith('http://') or data.url.startswith('https://') -%}
                         <a
                             href="{{ data.url }}"
-                            class="group relative flex min-h-12 items-center gap-5 rounded-xl bg-mono-100 py-3 pl-12 pr-5 transition-colors hover:bg-mono-200 dark:bg-mono-800 dark:hover:bg-mono-700"{% if is_external %} target="_blank" rel="noopener noreferrer"{% endif %}
-                            aria-label="{{ platform }} profile"
+                            class="social-link social-link-{{ platform }} group relative flex min-h-12 items-center gap-5 rounded-xl bg-mono-100 py-3 pl-12 pr-5 transition-colors hover:bg-mono-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mono-900 dark:bg-mono-800 dark:hover:bg-mono-700 dark:focus-visible:outline-mono-100"{% if is_external %} target="_blank" rel="noopener noreferrer"{% endif %}
+                            aria-label="{{ data.aria_label }}"
                         >
                             <div class="absolute left-4 flex-none">
                                 {% if platform == 'linkedin' %}
@@ -190,7 +152,6 @@
                             </div>
                             <span class="font-display text-mono-700 group-hover:text-mono-900 dark:text-mono-300 dark:group-hover:text-mono-100 text-base sm:text-lg tracking-wide">{{ data.label }}</span>
                         </a>
-                        {% endif %}
                         {% endfor %}
                     </nav>
                 </div>

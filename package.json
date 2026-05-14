@@ -1,0 +1,10 @@
+{
+  "name": "personal-website",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./styles.input.css -o ./styles.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

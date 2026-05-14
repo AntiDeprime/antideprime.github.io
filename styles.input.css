@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .highlight-link {
+    color: #047857;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease-in-out, text-decoration-color 0.2s ease-in-out;
+  }
+
+  .highlight-link:hover {
+    color: #10b981;
+    text-decoration-color: #10b981;
+  }
+
+  .social-link svg,
+  button {
+    transition: all 0.3s ease-in-out;
+  }
+
+  .social-link-linkedin:hover svg {
+    color: #0a66c2;
+  }
+
+  .social-link-telegram:hover svg {
+    color: #229ed9;
+  }
+
+  .social-link-email:hover svg {
+    color: #ea4335;
+  }
+
+  .social-link-github:hover svg {
+    color: #333333;
+  }
+
+  .dark .social-link-github:hover svg {
+    color: #ffffff;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media print {
+  .dark {
+    color-scheme: light;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  article {
+    border: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+
+  #theme-toggle {
+    display: none !important;
+  }
+}
