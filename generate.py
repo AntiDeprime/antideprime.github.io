@@ -8,7 +8,17 @@ from urllib.parse import urljoin
 import yaml
 from jinja2 import Environment, FileSystemLoader, TemplateNotFound
 
-REQUIRED_FIELDS = ("name", "bio", "summary", "assets", "seo", "theme", "layout", "social")
+REQUIRED_FIELDS = (
+    "name",
+    "bio",
+    "summary",
+    "assets",
+    "seo",
+    "analytics",
+    "theme",
+    "layout",
+    "social",
+)
 CONFIG_PATH = Path("config.yaml")
 TEMPLATE_PATH = Path("template.html")
 OUTPUT_PATH = Path("index.html")

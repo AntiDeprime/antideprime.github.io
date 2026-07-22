@@ -24,6 +24,10 @@ seo:
   image_width: 1200
   image_height: 630
 
+# Analytics
+analytics:
+  google_measurement_id: "G-6LN5H6T5LW"
+
 # Theme & Styling
 theme:
   fonts:

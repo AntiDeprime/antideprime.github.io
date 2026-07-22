@@ -11,6 +11,7 @@
 - [x] Fix Firefox dark-mode toggle regression, clean layout spacing, and add search/social preview metadata.
 - [x] Simplify `README.md` into a visitor-facing personal website note.
 - [x] Upgrade the personal page with optimized assets, static Tailwind CSS, richer profile metadata, and LLM-readable site facts.
+- [x] Add Google Analytics 4 tracking for the production website.
 
 ## Completion Log
 
@@ -21,3 +22,4 @@
 - 2026-05-12: Removed setup and contributor workflow details from `README.md`.
 - 2026-05-14: Added optimized metadata assets, static Tailwind build output, ProfilePage JSON-LD, GitHub profile link, `llms.txt`, and manifest/icon support.
 - 2026-05-14: Updated the profile summary copy to a first-person AI leadership positioning.
+- 2026-07-22: Added configurable Google Analytics 4 tracking with measurement ID `G-6LN5H6T5LW`.
