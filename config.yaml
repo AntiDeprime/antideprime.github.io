@@ -2,7 +2,17 @@
 name: "Aleksei Shchetinin"
 bio: "AI R&D @ <a href='https://www.action1.com' target='_blank' rel='noopener noreferrer' class='highlight-link action1-link'>Action1</a> · ex-<a href='https://www.wrike.com' target='_blank' rel='noopener noreferrer' class='highlight-link wrike-link'>Wrike</a>"
 summary: "I build and lead AI work at Action1, finding where intelligent systems can create real leverage, shaping how they work, and building solutions people can rely on."
-location: "📍 Berlin, Germany"
+location:
+  city: "Berlin"
+  country: "Germany"
+employment:
+  current:
+    role: "AI R&D"
+    company: "Action1"
+    url: "https://www.action1.com"
+  previous:
+    company: "Wrike"
+    url: "https://www.wrike.com"
 
 # Web Assets
 assets:
@@ -23,6 +33,8 @@ seo:
   locale: "en_US"
   image_width: 1200
   image_height: 630
+  theme_color: "#0a0a0a"
+  background_color: "#fafafa"
 
 # Analytics
 analytics:

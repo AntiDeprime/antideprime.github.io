@@ -41,7 +41,7 @@
     <meta name="twitter:description" content="{{ seo.description }}">
     <meta name="twitter:image" content="{{ absolute_assets.og_image }}">
     <meta name="twitter:image:alt" content="{{ name }}">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="{{ seo.theme_color }}">
 
     <title>{{ name }} - {{ seo.title }}</title>
 
@@ -118,7 +118,7 @@
 
                     <!-- Bio Section -->
                     <div class="text-mono-600 dark:text-mono-300 leading-relaxed mb-8 space-y-3 text-base sm:text-lg max-w-md">
-                        <p class="mb-0 leading-snug">{{ bio }}<br><span class="text-mono-500 dark:text-mono-400 text-sm leading-snug">{{ location }}</span></p>
+                        <p class="mb-0 leading-snug">{{ bio }}<br><span class="text-mono-500 dark:text-mono-400 text-sm leading-snug">📍 {{ location.city }}, {{ location.country }}</span></p>
                         <p class="text-sm leading-relaxed text-mono-500 dark:text-mono-400">{{ summary }}</p>
                     </div>
 

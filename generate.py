@@ -12,6 +12,8 @@ REQUIRED_FIELDS = (
     "name",
     "bio",
     "summary",
+    "location",
+    "employment",
     "assets",
     "seo",
     "analytics",
@@ -102,6 +104,9 @@ def build_json_ld(
         for data in social_links.values()
         if data["url"].startswith(("http://", "https://"))
     ]
+    current = config["employment"]["current"]
+    previous = config["employment"]["previous"]
+    location = config["location"]
 
     return {
         "@context": "https://schema.org",
@@ -117,21 +122,21 @@ def build_json_ld(
             "url": site_url,
             "image": absolute_assets["avatar"],
             "description": config["summary"],
-            "jobTitle": "AI R&D",
+            "jobTitle": f"{current['role']} at {current['company']}",
             "address": {
                 "@type": "PostalAddress",
-                "addressLocality": "Berlin",
-                "addressCountry": "Germany",
+                "addressLocality": location["city"],
+                "addressCountry": location["country"],
             },
             "worksFor": {
                 "@type": "Organization",
-                "name": "Action1",
-                "url": "https://www.action1.com",
+                "name": current["company"],
+                "url": current["url"],
             },
             "alumniOf": {
                 "@type": "Organization",
-                "name": "Wrike",
-                "url": "https://www.wrike.com",
+                "name": previous["company"],
+                "url": previous["url"],
             },
             "sameAs": same_as,
         },
@@ -188,9 +193,9 @@ def write_search_metadata(config: dict[str, Any]) -> None:
                 config["summary"],
                 "",
                 f"- Canonical URL: {site_url}/",
-                f"- Location: Berlin, Germany",
-                "- Current work: AI R&D at Action1",
-                "- Previous work: Wrike",
+                f"- Location: {config['location']['city']}, {config['location']['country']}",
+                f"- Current work: {config['employment']['current']['role']} at {config['employment']['current']['company']}",
+                f"- Previous work: {config['employment']['previous']['company']}",
                 "",
                 "## Canonical Links",
                 *[
@@ -210,8 +215,8 @@ def write_search_metadata(config: dict[str, Any]) -> None:
                 "short_name": config["name"],
                 "start_url": "/",
                 "display": "minimal-ui",
-                "background_color": "#fafafa",
-                "theme_color": "#0a0a0a",
+                "background_color": config["seo"]["background_color"],
+                "theme_color": config["seo"]["theme_color"],
                 "icons": [
                     {
                         "src": f"/{config['assets']['icon_192']}",
