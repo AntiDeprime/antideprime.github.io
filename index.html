@@ -73,12 +73,12 @@
     <!-- Analytics Consent Dialog -->
     <div
         id="consent-banner"
-        class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-mono-950/50"
+        class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex items-end justify-center sm:items-center sm:p-4 sm:bg-mono-950/50"
         role="dialog"
         aria-modal="true"
         aria-labelledby="consent-title"
     >
-        <div class="w-full max-w-sm rounded-2xl border border-mono-200 dark:border-mono-800 bg-white dark:bg-mono-900 p-5 shadow-lg">
+        <div class="w-full sm:max-w-sm rounded-t-2xl sm:rounded-2xl border border-mono-200 dark:border-mono-800 bg-white dark:bg-mono-900 p-5 shadow-lg">
             <h2 id="consent-title" class="font-display text-lg text-mono-900 dark:text-mono-100 mb-2">Analytics consent</h2>
             <p class="text-sm text-mono-600 dark:text-mono-300 mb-4 leading-relaxed">This site uses Google Analytics to understand how it is used. Analytics only runs if you consent, and you can always decline.</p>
             <div class="flex justify-end gap-2">
@@ -88,31 +88,31 @@
         </div>
     </div>
 
-    <!-- Theme Toggle -->
-    <div class="fixed bottom-8 right-8 z-50 opacity-75 hover:opacity-100 transition-opacity">
-        <button
-            id="theme-toggle"
-            class="relative rounded-full w-12 h-6 bg-white dark:bg-mono-900 border border-mono-200 dark:border-mono-800 hover:border-mono-300 dark:hover:border-mono-700 transition-all duration-300 shadow-sm hover:shadow-lg"
-            aria-label="Toggle dark mode"
-            aria-pressed="false"
-            type="button"
-        >
-            <div class="w-5 h-5 bg-mono-100 dark:bg-mono-800 rounded-full absolute left-0.5 top-0.5 dark:translate-x-6 transition-all duration-300 flex items-center justify-center">
-                <!-- Sun Icon -->
-                <svg aria-hidden="true" class="w-3.5 h-3.5 text-mono-600 transition-opacity duration-300 dark:opacity-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="3.5"/>
-                    <path d="M12 5v-2m0 18v-2M7 7l-1.5-1.5M18.5 18.5L17 17M5 12H3m18 0h-2M7 17l-1.5 1.5M18.5 5.5L17 7"/>
-                </svg>
-                <!-- Moon Icon -->
-                <svg aria-hidden="true" class="w-3.5 h-3.5 text-mono-400 dark:text-mono-300 absolute opacity-0 dark:opacity-100 transition-opacity duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
-                </svg>
+    <main class="min-h-full flex items-center justify-center p-4 sm:p-8">
+        <article class="relative w-full max-w-[28rem] mx-auto rounded-3xl border border-mono-200 dark:border-mono-800 bg-white dark:bg-mono-900 p-8 sm:p-10 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-mono-300 dark:hover:border-mono-700">
+            <!-- Theme Toggle -->
+            <div class="absolute top-4 right-4 sm:top-5 sm:right-5 opacity-75 hover:opacity-100 transition-opacity">
+                <button
+                    id="theme-toggle"
+                    class="relative rounded-full w-12 h-6 bg-white dark:bg-mono-900 border border-mono-200 dark:border-mono-800 hover:border-mono-300 dark:hover:border-mono-700 transition-all duration-300 shadow-sm hover:shadow-lg"
+                    aria-label="Toggle dark mode"
+                    aria-pressed="false"
+                    type="button"
+                >
+                    <div class="w-5 h-5 bg-mono-100 dark:bg-mono-800 rounded-full absolute left-0.5 top-0.5 dark:translate-x-6 transition-all duration-300 flex items-center justify-center">
+                        <!-- Sun Icon -->
+                        <svg aria-hidden="true" class="w-3.5 h-3.5 text-mono-600 transition-opacity duration-300 dark:opacity-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3.5"/>
+                            <path d="M12 5v-2m0 18v-2M7 7l-1.5-1.5M18.5 18.5L17 17M5 12H3m18 0h-2M7 17l-1.5 1.5M18.5 5.5L17 7"/>
+                        </svg>
+                        <!-- Moon Icon -->
+                        <svg aria-hidden="true" class="w-3.5 h-3.5 text-mono-400 dark:text-mono-300 absolute opacity-0 dark:opacity-100 transition-opacity duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                        </svg>
+                    </div>
+                </button>
             </div>
-        </button>
-    </div>
 
-    <main class="min-h-full flex items-center justify-center p-4 pb-20 sm:p-8">
-        <article class="w-full max-w-[28rem] mx-auto rounded-3xl border border-mono-200 dark:border-mono-800 bg-white dark:bg-mono-900 p-8 sm:p-10 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-mono-300 dark:hover:border-mono-700">
             <div class="flex flex-col items-center gap-7 sm:gap-8">
                 <!-- Profile Image -->
                 <img
