@@ -25,3 +25,4 @@
 - 2026-05-14: Updated the profile summary copy to a first-person AI leadership positioning.
 - 2026-07-22: Added configurable Google Analytics 4 tracking and updated the measurement ID to `G-JWD1WMJEDF`.
 - 2026-08-26: Repaired link-hover/bio styles that Tailwind's content scan silently dropped, moved employment/location/theme colors into `config.yaml`, made the theme toggle work on mobile, self-hosted fonts, gated analytics behind a consent banner, merged the duplicate CI jobs in favor of a single build with `setup-uv`, and removed dead config/markup (keywords meta, `og:image:secure_url`, unused platforms, boilerplate project description).
+- 2026-08-26: Bumped transitive `postcss` to 8.5.26 and `nanoid` to 3.3.18 to clear the two open Dependabot alerts; rebuilt `styles.css` with the updated toolchain.
