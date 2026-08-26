@@ -1,6 +1,9 @@
 {
   "name": "personal-website",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build:css": "tailwindcss -i ./styles.input.css -o ./styles.css --minify"
   },
