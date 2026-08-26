@@ -17,7 +17,6 @@ REQUIRED_FIELDS = (
     "assets",
     "seo",
     "analytics",
-    "theme",
     "layout",
     "social",
 )

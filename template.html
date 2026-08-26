@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ analytics.google_measurement_id }}"></script>
+    <!-- Google Analytics loads only after explicit consent; see analytics.js -->
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '{{ analytics.google_measurement_id }}');
+        window.GA_MEASUREMENT_ID = {{ analytics.google_measurement_id | tojson }};
     </script>
 
     <meta charset="UTF-8">
@@ -46,8 +42,6 @@
     <title>{{ name }} - {{ seo.title }}</title>
 
     <!-- Preload Critical Resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="{{ assets.avatar }}" as="image" type="image/webp" fetchpriority="high">
 
     <!-- Styles -->
@@ -67,17 +61,31 @@
             document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
         })();
     </script>
-    <link href="https://fonts.googleapis.com/css2?family={{ theme.fonts.display }}:wght@400;500;600&family={{ theme.fonts.body }}:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
     <!-- Scripts -->
     <script src="theme.js" defer></script>
+    <script src="analytics.js" defer></script>
     <script type="application/ld+json">
         {{ json_ld | tojson }}
     </script>
 </head>
 
 <body class="bg-mono-100 dark:bg-mono-950 text-mono-900 dark:text-mono-100 antialiased h-full font-body">
+    <!-- Analytics Consent Banner -->
+    <div
+        id="consent-banner"
+        class="hidden fixed bottom-20 sm:bottom-8 left-4 right-4 sm:left-8 sm:right-auto sm:w-96 z-50 rounded-2xl border border-mono-200 dark:border-mono-800 bg-white dark:bg-mono-900 p-4 shadow-lg"
+        role="region"
+        aria-label="Analytics consent"
+    >
+        <p class="text-sm text-mono-600 dark:text-mono-300 mb-3 leading-relaxed">This site uses Google Analytics to understand how it is used. Analytics only runs if you consent, and you can always decline.</p>
+        <div class="flex justify-end gap-2">
+            <button id="consent-decline" type="button" class="rounded-lg px-3 py-1.5 text-sm border border-mono-200 dark:border-mono-700 text-mono-600 dark:text-mono-300 hover:bg-mono-100 dark:hover:bg-mono-800 transition-colors">Decline</button>
+            <button id="consent-accept" type="button" class="rounded-lg px-3 py-1.5 text-sm bg-mono-900 dark:bg-mono-100 text-white dark:text-mono-900 hover:bg-mono-700 dark:hover:bg-mono-200 transition-colors">Accept</button>
+        </div>
+    </div>
+
     <!-- Theme Toggle -->
     <div class="fixed bottom-8 right-8 z-50 opacity-75 hover:opacity-100 transition-opacity">
         <button

@@ -41,10 +41,7 @@ analytics:
   google_measurement_id: "G-JWD1WMJEDF"
 
 # Theme & Styling
-theme:
-  fonts:
-    display: "Outfit"
-    body: "Plus Jakarta Sans"
+# Typefaces are self-hosted and defined in styles.input.css / tailwind.config.js
 
 # Layout
 layout:
