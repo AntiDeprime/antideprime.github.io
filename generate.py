@@ -4,9 +4,10 @@ import sys
 from pathlib import Path
 from typing import Any
 from urllib.parse import urljoin
+from xml.sax.saxutils import escape
 
 import yaml
-from jinja2 import Environment, FileSystemLoader, TemplateNotFound
+from jinja2 import Environment, FileSystemLoader, TemplateError
 
 REQUIRED_FIELDS = (
     "name",
@@ -174,7 +175,7 @@ def write_search_metadata(config: dict[str, Any]) -> None:
                 '<?xml version="1.0" encoding="UTF-8"?>',
                 '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
                 "  <url>",
-                f"    <loc>{site_url}/</loc>",
+                f"    <loc>{escape(f'{site_url}/')}</loc>",
                 "    <priority>1.0</priority>",
                 "  </url>",
                 "</urlset>",
@@ -260,14 +261,11 @@ def generate_site() -> None:
         OUTPUT_PATH.write_text(html, encoding="utf-8")
         write_search_metadata(config)
         print(f"Successfully generated {OUTPUT_PATH}")
-    except TemplateNotFound:
-        print(f"Template file not found: {TEMPLATE_PATH}", file=sys.stderr)
+    except TemplateError as e:
+        print(f"Error rendering {TEMPLATE_PATH}: {e}", file=sys.stderr)
         sys.exit(1)
     except OSError as e:
         print(f"File system error while generating site: {e}", file=sys.stderr)
-        sys.exit(1)
-    except ValueError as e:
-        print(f"Error generating site: {e}", file=sys.stderr)
         sys.exit(1)
 
 

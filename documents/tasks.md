@@ -12,6 +12,7 @@
 - [x] Simplify `README.md` into a visitor-facing personal website note.
 - [x] Upgrade the personal page with optimized assets, static Tailwind CSS, richer profile metadata, and LLM-readable site facts.
 - [x] Add Google Analytics 4 tracking for the production website.
+- [x] Full project review: restore CSS lost to Tailwind content scan, derive metadata from config, unblock theme toggle on mobile, self-host fonts with consent-gated analytics, deduplicate CI jobs, and clean up dead code/config.
 
 ## Completion Log
 
@@ -23,3 +24,4 @@
 - 2026-05-14: Added optimized metadata assets, static Tailwind build output, ProfilePage JSON-LD, GitHub profile link, `llms.txt`, and manifest/icon support.
 - 2026-05-14: Updated the profile summary copy to a first-person AI leadership positioning.
 - 2026-07-22: Added configurable Google Analytics 4 tracking and updated the measurement ID to `G-JWD1WMJEDF`.
+- 2026-08-26: Repaired link-hover/bio styles that Tailwind's content scan silently dropped, moved employment/location/theme colors into `config.yaml`, made the theme toggle work on mobile, self-hosted fonts, gated analytics behind a consent banner, merged the duplicate CI jobs in favor of a single build with `setup-uv`, and removed dead config/markup (keywords meta, `og:image:secure_url`, unused platforms, boilerplate project description).

@@ -16,7 +16,6 @@ employment:
 
 # Web Assets
 assets:
-  source_photo: "profile.jpeg"
   avatar: "assets/avatar-512.webp?v=20260514"
   og_image: "assets/og-image.jpg"
   favicon: "assets/favicon.png"
@@ -28,7 +27,6 @@ assets:
 seo:
   title: "AI R&D in Berlin"
   description: "Aleksei Shchetinin is an AI R&D professional in Berlin, working on AI products at Action1 after Wrike."
-  keywords: "Aleksei Shchetinin, Product Manager, AI, Machine Learning, Data Science, Berlin"
   site_url: "https://alxy.sh"
   locale: "en_US"
   image_width: 1200
@@ -75,8 +73,3 @@ social:
     label: "github.com/antideprime"
     aria_label: "Aleksei Shchetinin on GitHub"
     enabled: true
-  cv:
-    url: ""
-    label: "CV"
-    aria_label: "Aleksei Shchetinin CV"
-    enabled: false

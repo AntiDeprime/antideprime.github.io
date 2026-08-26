@@ -1,16 +1,26 @@
 #!/usr/bin/env sh
 set -eu
 
-SOURCE="${1:-profile.jpeg}"
+# Source photo lives outside the deployed assets directory: src/profile.jpeg
+SOURCE="${1:-src/profile.jpeg}"
 ASSETS_DIR="assets"
-TMP_DIR="${TMPDIR:-/tmp}/personal-website-assets"
 
-mkdir -p "$ASSETS_DIR" "$TMP_DIR"
+mkdir -p "$ASSETS_DIR"
 
-# Source photo is 3024x4032. Crop centrally to a square for identity icons.
-cwebp -quiet -q 88 -crop 0 504 3024 3024 -resize 512 512 "$SOURCE" -o "$ASSETS_DIR/avatar-512.webp"
+# Derive a centered square crop from the source dimensions instead of
+# hardcoding coordinates that only work for one photo.
+DIMS=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$SOURCE")
+W=${DIMS%%,*}
+H=${DIMS##*,}
+SIDE=$((W < H ? W : H))
+X=$(((W - SIDE) / 2))
+Y=$(((H - SIDE) / 2))
+
+# Square identity avatar: center-crop to a square and resize to 512.
+cwebp -quiet -q 88 -crop "$X" "$Y" "$SIDE" "$SIDE" -resize 512 512 "$SOURCE" -o "$ASSETS_DIR/avatar-512.webp"
 
 # Crop a wide social preview directly from the source and encode without EXIF/XMP.
+# The framing offsets are chosen for the current source photo.
 ffmpeg -y -hide_banner -loglevel error \
   -i "$SOURCE" \
   -vf "crop=3024:1588:0:1222,scale=1200:630" \
