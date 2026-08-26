@@ -33,12 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const savedTheme = readStoredTheme();
-    const systemPrefersDark = window.matchMedia
-        ? window.matchMedia('(prefers-color-scheme: dark)').matches
-        : false;
-
-    applyTheme(savedTheme === DARK_THEME || (!savedTheme && systemPrefersDark));
+    // The head-inlined script already applied the effective theme.
+    applyTheme(document.documentElement.classList.contains(DARK_THEME));
 
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
@@ -46,5 +42,19 @@ document.addEventListener('DOMContentLoaded', () => {
             applyTheme(isDark);
             writeStoredTheme(isDark ? DARK_THEME : LIGHT_THEME);
         });
+    }
+
+    if (window.matchMedia) {
+        const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const onSystemChange = (event) => {
+            if (readStoredTheme() === null) {
+                applyTheme(event.matches);
+            }
+        };
+        if (typeof darkScheme.addEventListener === 'function') {
+            darkScheme.addEventListener('change', onSystemChange);
+        } else if (typeof darkScheme.addListener === 'function') {
+            darkScheme.addListener(onSystemChange);
+        }
     }
 });

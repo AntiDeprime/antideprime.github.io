@@ -53,17 +53,18 @@
     <!-- Styles -->
     <script>
         (function () {
+            var isDark = false;
             try {
                 var savedTheme = localStorage.getItem('theme');
                 var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-                    document.documentElement.classList.add('dark');
-                }
+                isDark = savedTheme === 'dark' || (!savedTheme && !!prefersDark);
             } catch (error) {
-                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    document.documentElement.classList.add('dark');
-                }
+                isDark = !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
             }
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            }
+            document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
         })();
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Plus Jakarta Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -77,12 +78,14 @@
 </head>
 
 <body class="bg-mono-100 dark:bg-mono-950 text-mono-900 dark:text-mono-100 antialiased h-full font-body">
-    <!-- Theme Toggle - Desktop Only -->
-    <div class="fixed bottom-8 right-8 z-50 hidden sm:block opacity-75 hover:opacity-100 transition-opacity">
+    <!-- Theme Toggle -->
+    <div class="fixed bottom-8 right-8 z-50 opacity-75 hover:opacity-100 transition-opacity">
         <button
             id="theme-toggle"
             class="relative rounded-full w-12 h-6 bg-white dark:bg-mono-900 border border-mono-200 dark:border-mono-800 hover:border-mono-300 dark:hover:border-mono-700 transition-all duration-300 shadow-sm hover:shadow-lg"
             aria-label="Toggle dark mode"
+            aria-pressed="false"
+            type="button"
         >
             <div class="w-5 h-5 bg-mono-100 dark:bg-mono-800 rounded-full absolute left-0.5 top-0.5 dark:translate-x-6 transition-all duration-300 flex items-center justify-center">
                 <!-- Sun Icon -->
