@@ -1,17 +1,6 @@
 module.exports = {
-  content: ["./template.html", "./theme.js"],
+  content: ["./template.html", "./config.yaml", "./theme.js"],
   darkMode: "class",
-  safelist: [
-    "max-w-[28rem]",
-    "w-36",
-    "h-36",
-    "sm:w-40",
-    "sm:h-40",
-    "p-8",
-    "sm:p-10",
-    "gap-7",
-    "sm:gap-8",
-  ],
   theme: {
     extend: {
       colors: {
