@@ -1,9 +1,8 @@
 (function () {
     const CONSENT_KEY = 'analytics-consent';
     const MEASUREMENT_ID = window.GA_MEASUREMENT_ID;
-    const consentBanner = document.getElementById('consent-banner');
-    const acceptButton = document.getElementById('consent-accept');
-    const declineButton = document.getElementById('consent-decline');
+    const consentDialog = document.getElementById('analytics-consent-dialog');
+    let analyticsLoaded = false;
 
     const readConsent = () => {
         try {
@@ -22,9 +21,11 @@
     };
 
     const loadAnalytics = () => {
-        if (!MEASUREMENT_ID) {
+        if (!MEASUREMENT_ID || analyticsLoaded) {
             return;
         }
+        analyticsLoaded = true;
+
         const script = document.createElement('script');
         script.async = true;
         script.src = 'https://www.googletagmanager.com/gtag/js?id=' + MEASUREMENT_ID;
@@ -37,31 +38,41 @@
         window.gtag('config', MEASUREMENT_ID);
     };
 
-    const hideBanner = () => {
-        if (consentBanner) {
-            consentBanner.classList.add('hidden');
+    const showConsentDialog = () => {
+        if (consentDialog instanceof HTMLDialogElement && !consentDialog.open) {
+            consentDialog.showModal();
         }
     };
+
+    if (consentDialog instanceof HTMLDialogElement) {
+        consentDialog.addEventListener('click', (event) => {
+            if (!(event.target instanceof Element)) {
+                return;
+            }
+
+            const choiceButton = event.target.closest('[data-consent-choice]');
+            if (!choiceButton) {
+                return;
+            }
+
+            const choice = choiceButton.dataset.consentChoice;
+            if (choice !== 'granted' && choice !== 'denied') {
+                return;
+            }
+
+            writeConsent(choice);
+            consentDialog.close();
+
+            if (choice === 'granted') {
+                loadAnalytics();
+            }
+        });
+    }
 
     const consent = readConsent();
     if (consent === 'granted') {
         loadAnalytics();
-    } else if (consent === null && consentBanner) {
-        consentBanner.classList.remove('hidden');
-    }
-
-    if (acceptButton) {
-        acceptButton.addEventListener('click', () => {
-            writeConsent('granted');
-            loadAnalytics();
-            hideBanner();
-        });
-    }
-
-    if (declineButton) {
-        declineButton.addEventListener('click', () => {
-            writeConsent('denied');
-            hideBanner();
-        });
+    } else if (consent === null) {
+        showConsentDialog();
     }
 })();

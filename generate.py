@@ -7,11 +7,10 @@ from urllib.parse import urljoin
 from xml.sax.saxutils import escape
 
 import yaml
-from jinja2 import Environment, FileSystemLoader, TemplateError
+from jinja2 import Environment, FileSystemLoader, TemplateError, select_autoescape
 
 REQUIRED_FIELDS = (
     "name",
-    "bio",
     "summary",
     "location",
     "employment",
@@ -67,10 +66,11 @@ def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
 
 
 def setup_jinja(template_path: str = ".") -> Environment:
-    """Set up Jinja2 environment with custom filters."""
-    env = Environment(loader=FileSystemLoader(template_path))
-    env.filters["tojson"] = lambda value: json.dumps(value, ensure_ascii=False)
-    return env
+    """Set up Jinja2 with HTML autoescaping enabled."""
+    return Environment(
+        loader=FileSystemLoader(template_path),
+        autoescape=select_autoescape(("html", "xml")),
+    )
 
 
 def absolute_url(value: str, site_url: str) -> str:

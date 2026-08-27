@@ -190,6 +190,16 @@ html {
   scroll-behavior: smooth;
 }
 
+.consent-dialog::backdrop {
+  background: transparent;
+}
+
+@media (min-width: 640px) {
+  .consent-dialog::backdrop {
+    background: rgb(10 10 10 / 0.5);
+  }
+}
+
 .highlight-link {
   color: #047857;
   font-weight: 600;
@@ -255,7 +265,8 @@ html {
     box-shadow: none !important;
   }
 
-  #theme-toggle {
+  #theme-toggle,
+  .consent-dialog {
     display: none !important;
   }
 }
