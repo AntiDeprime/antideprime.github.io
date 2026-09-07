@@ -2,7 +2,12 @@
     const CONSENT_KEY = 'analytics-consent';
     const MEASUREMENT_ID = window.GA_MEASUREMENT_ID;
     const consentDialog = document.getElementById('analytics-consent-dialog');
+    const settingsButton = document.getElementById('analytics-settings');
     let analyticsLoaded = false;
+
+    if (!MEASUREMENT_ID) {
+        return;
+    }
 
     const readConsent = () => {
         try {
@@ -21,7 +26,9 @@
     };
 
     const loadAnalytics = () => {
-        if (!MEASUREMENT_ID || analyticsLoaded) {
+        window['ga-disable-' + MEASUREMENT_ID] = false;
+        if (analyticsLoaded) {
+            window.gtag('consent', 'update', { analytics_storage: 'granted' });
             return;
         }
         analyticsLoaded = true;
@@ -44,6 +51,11 @@
         }
     };
 
+    if (settingsButton) {
+        settingsButton.hidden = false;
+        settingsButton.addEventListener('click', showConsentDialog);
+    }
+
     if (consentDialog instanceof HTMLDialogElement) {
         consentDialog.addEventListener('click', (event) => {
             if (!(event.target instanceof Element)) {
@@ -65,6 +77,10 @@
 
             if (choice === 'granted') {
                 loadAnalytics();
+            } else if (analyticsLoaded) {
+                // Stop collection immediately, even when storage is unavailable.
+                window['ga-disable-' + MEASUREMENT_ID] = true;
+                window.gtag('consent', 'update', { analytics_storage: 'denied' });
             }
         });
     }
@@ -72,7 +88,7 @@
     const consent = readConsent();
     if (consent === 'granted') {
         loadAnalytics();
-    } else if (consent === null) {
+    } else if (consent !== 'denied') {
         showConsentDialog();
     }
 })();

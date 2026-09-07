@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from xml.sax.saxutils import escape
 
 import yaml
-from jinja2 import Environment, FileSystemLoader, TemplateError, select_autoescape
+from jinja2 import Environment, FileSystemLoader, StrictUndefined, TemplateError, select_autoescape
 
 REQUIRED_FIELDS = (
     "name",
@@ -70,6 +70,7 @@ def setup_jinja(template_path: str = ".") -> Environment:
     return Environment(
         loader=FileSystemLoader(template_path),
         autoescape=select_autoescape(("html", "xml")),
+        undefined=StrictUndefined,
     )
 
 

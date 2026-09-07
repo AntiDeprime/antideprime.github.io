@@ -55,6 +55,11 @@ jobs:
       - name: Generate HTML
         run: uv run python generate.py
 
+      - name: Run regression checks
+        run: |
+          uv run python -m unittest discover -s tests
+          node --test tests/*.test.cjs
+
       - name: Ensure generated output is committed
         run: git diff --exit-code -- index.html robots.txt sitemap.xml llms.txt site.webmanifest styles.css
 

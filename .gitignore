@@ -42,3 +42,5 @@ Thumbs.db
 
 # Local browser tooling
 .playwright-mcp/
+.playwright-cli/
+output/playwright/

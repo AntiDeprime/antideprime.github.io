@@ -210,8 +210,21 @@ html {
 }
 
 .highlight-link:hover {
-  color: #10b981;
-  text-decoration-color: #10b981;
+  color: #065f46;
+  text-decoration-color: currentColor;
+}
+
+.dark .highlight-link {
+  color: #34d399;
+}
+
+.dark .highlight-link:hover {
+  color: #6ee7b7;
+}
+
+.social-link span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .social-link-linkedin:hover svg {
@@ -266,7 +279,14 @@ html {
   }
 
   #theme-toggle,
+  #analytics-settings,
   .consent-dialog {
     display: none !important;
+  }
+
+  article,
+  article * {
+    background: transparent !important;
+    color: #000 !important;
   }
 }

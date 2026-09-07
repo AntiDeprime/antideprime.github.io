@@ -78,7 +78,7 @@
         aria-describedby="consent-description"
     >
         <h2 id="consent-title" class="mb-2 font-display text-lg text-mono-900 dark:text-mono-100">Analytics consent</h2>
-        <p id="consent-description" class="mb-4 text-sm leading-relaxed text-mono-600 dark:text-mono-300">This site uses Google Analytics to understand how it is used. Analytics only runs if you consent, and you can always decline.</p>
+        <p id="consent-description" class="mb-4 text-sm leading-relaxed text-mono-600 dark:text-mono-300">This site uses Google Analytics to understand how it is used. Analytics only runs if you consent. You can change your choice anytime using Analytics settings below the profile links.</p>
         <div class="flex justify-end gap-2">
             <button data-consent-choice="denied" type="button" class="rounded-lg border border-mono-200 px-3 py-1.5 text-sm text-mono-600 transition-colors hover:bg-mono-100 dark:border-mono-700 dark:text-mono-300 dark:hover:bg-mono-800">Decline</button>
             <button data-consent-choice="granted" type="button" class="rounded-lg bg-mono-900 px-3 py-1.5 text-sm text-white transition-colors hover:bg-mono-700 dark:bg-mono-100 dark:text-mono-900 dark:hover:bg-mono-200">Accept</button>
@@ -192,6 +192,7 @@
                         </a>
 
                     </nav>
+                    <button id="analytics-settings" type="button" hidden class="mt-5 text-sm text-mono-600 underline underline-offset-4 dark:text-mono-300">Analytics settings</button>
                 </div>
             </div>
         </article>

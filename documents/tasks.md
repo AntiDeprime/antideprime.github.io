@@ -6,6 +6,7 @@
 
 ## Ad-hoc Tasks
 
+- [x] Review fitness, consent controls, accessibility, build dependencies, and regression coverage; fix and validate findings.
 - [x] Migrate repository workflow from `pip`/`requirements.txt` to `uv`.
 - [x] Harden Tailwind/runtime config loading, generator validation, and Pages workflow checks.
 - [x] Fix Firefox dark-mode toggle regression, clean layout spacing, and add search/social preview metadata.
@@ -17,6 +18,7 @@
 
 ## Completion Log
 
+- 2026-09-07: Reviewed the site as a static professional profile. Added reusable analytics settings and immediate opt-out, suppressed consent UI when tracking is disabled, repaired dark-theme link contrast and print colors, allowed narrow-screen social labels to wrap, enabled strict Jinja undefined checks, and updated the vulnerable transitive CSS selector parser. Added eight dependency-free regression checks to CI and documented the build/deployment workflow. Verified locked installs, image/CSS/HTML generation, zero npm audit vulnerabilities, browser widths 320–1440, dark mode, printing, and accept/revoke/reload behavior with the external analytics script stubbed.
 - 2026-04-23: Initialized task tracker structure.
 - 2026-04-23: Migrated docs and GitHub Actions workflow to `uv`; removed `requirements.txt`.
 - 2026-04-23: Added generated-output CI guard, narrowed Pages artifact contents, and simplified CSS/JS runtime behavior.
