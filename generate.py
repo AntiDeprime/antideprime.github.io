@@ -3,7 +3,7 @@ import json
 import sys
 from pathlib import Path
 from typing import Any
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit
 from xml.sax.saxutils import escape
 
 import yaml
@@ -247,12 +247,10 @@ def render_index(config: dict[str, Any]) -> str:
         for key, value in config["assets"].items()
         if isinstance(value, str)
     }
-    social_links = {
-        platform: {**data, "name": display_platform(platform)}
-        for platform, data in enabled_social_links(config).items()
-    }
+    social_links = enabled_social_links(config)
     rendered_html = template.render(
         **config,
+        site_host=urlsplit(site_url).hostname,
         social_links=social_links,
         absolute_assets=absolute_assets,
         json_ld=build_json_ld(config, absolute_assets, social_links),

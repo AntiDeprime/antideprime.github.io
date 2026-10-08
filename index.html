@@ -39,8 +39,9 @@
     <meta name="twitter:image" content="https://alxy.sh/assets/og-image.jpg">
     <meta name="twitter:image:alt" content="Aleksei Shchetinin">
 
-    <!-- The font is discovered late (inside styles.css), so preload the above-the-fold subset -->
+    <!-- Fonts are discovered late (inside styles.css), so preload the above-the-fold subsets -->
     <link rel="preload" href="assets/fonts/Geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/GeistMono-latin.woff2" as="font" type="font/woff2" crossorigin>
 
     <!-- Apply a saved theme before first paint to avoid a flash -->
     <script>
@@ -63,6 +64,7 @@
 <body>
     <div class="shell">
         <header class="site-header">
+            <p class="brand">alxy<span>.sh</span></p>
             <button id="theme-toggle" class="icon-button" type="button" aria-label="Dark theme" aria-pressed="false" hidden>
                 <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                     <circle cx="12" cy="12" r="8.5"/>
@@ -73,10 +75,14 @@
 
         <main id="content" class="profile">
             <div class="intro">
-                <img class="avatar" src="assets/avatar-256.webp" alt="Portrait of Aleksei Shchetinin" width="112" height="112" fetchpriority="high" decoding="async">
+                <img class="avatar" src="assets/avatar-256.webp" alt="Portrait of Aleksei Shchetinin" width="96" height="96" fetchpriority="high" decoding="async">
+                <p class="prompt" aria-hidden="true"><span>$</span> whoami</p>
                 <h1 class="name">Aleksei Shchetinin</h1>
-                <p class="role">AI R&amp;D at <a class="inline-link" href="https://www.action1.com" target="_blank" rel="noopener noreferrer">Action1</a></p>
-                <p class="meta">Berlin, Germany<span aria-hidden="true"> · </span>Previously <a class="inline-link" href="https://www.wrike.com" target="_blank" rel="noopener noreferrer">Wrike</a></p>
+                <dl class="facts">
+                    <div><dt>role</dt><dd>AI R&amp;D @ <a class="inline-link" href="https://www.action1.com" target="_blank" rel="noopener noreferrer">Action1</a></dd></div>
+                    <div><dt>prev</dt><dd><a class="inline-link" href="https://www.wrike.com" target="_blank" rel="noopener noreferrer">Wrike</a></dd></div>
+                    <div><dt>base</dt><dd>Berlin, Germany</dd></div>
+                </dl>
                 <p class="summary">I build and lead AI work at Action1, finding where intelligent systems can create real leverage, shaping how they work, and building solutions people can rely on.</p>
             </div>
 
@@ -84,25 +90,25 @@
                 <ul>
                     <li>
                         <a href="https://www.linkedin.com/in/aleksei-shchetinin/" target="_blank" rel="noopener noreferrer">
-                            <span class="links-name">LinkedIn</span>
+                            <span class="links-key">linkedin</span>
                             <span class="links-value">in/aleksei-shchetinin</span>
                         </a>
                     </li>
                     <li>
                         <a href="https://t.me/antideprime" target="_blank" rel="noopener noreferrer">
-                            <span class="links-name">Telegram</span>
+                            <span class="links-key">telegram</span>
                             <span class="links-value">t.me/antideprime</span>
                         </a>
                     </li>
                     <li>
                         <a href="mailto:to@alxy.sh">
-                            <span class="links-name">Email</span>
+                            <span class="links-key">email</span>
                             <span class="links-value">to@alxy.sh</span>
                         </a>
                     </li>
                     <li>
                         <a href="https://github.com/antideprime" target="_blank" rel="noopener noreferrer">
-                            <span class="links-name">GitHub</span>
+                            <span class="links-key">github</span>
                             <span class="links-value">github.com/antideprime</span>
                         </a>
                     </li>
