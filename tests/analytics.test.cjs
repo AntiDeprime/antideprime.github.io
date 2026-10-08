@@ -3,25 +3,29 @@ const { test } = require('node:test');
 const { readFileSync } = require('node:fs');
 const vm = require('node:vm');
 
-function visit({ consent = null, id = 'G-TEST', blocked = false } = {}) {
+function visit({ consent = null, id = 'G-TEST', blocked = false, bannerPresent = true } = {}) {
     class Element {
-        constructor() { this.listeners = {}; this.hidden = true; }
+        constructor() {
+            this.listeners = {};
+            this.dataset = {};
+            this.hidden = true;
+            this.focused = 0;
+        }
         addEventListener(type, callback) { this.listeners[type] = callback; }
         closest() { return this; }
+        focus() { this.focused += 1; }
     }
-    class Dialog extends Element {
-        open = false;
-        showModal() { this.open = true; }
-        close() { this.open = false; }
-    }
-    const dialog = new Dialog();
+    const banner = new Element();
+    banner.dataset.measurementId = id;
+    const firstButton = new Element();
+    banner.querySelector = () => firstButton;
     const settings = new Element();
     const scripts = [];
-    const window = { GA_MEASUREMENT_ID: id };
+    const window = {};
     vm.runInNewContext(readFileSync('analytics.js', 'utf8'), {
-        window, Element, HTMLDialogElement: Dialog,
+        window, Element,
         document: {
-            getElementById: id => id === 'analytics-settings' ? settings : dialog,
+            getElementById: name => name === 'analytics-settings' ? settings : bannerPresent ? banner : null,
             createElement: () => ({}),
             head: { appendChild: script => scripts.push(script) },
         },
@@ -31,11 +35,11 @@ function visit({ consent = null, id = 'G-TEST', blocked = false } = {}) {
         },
     });
     return {
-        dialog, settings, scripts, window,
+        banner, settings, firstButton, scripts, window,
         choice(value) {
             const target = new Element();
             target.dataset = { consentChoice: value };
-            dialog.listeners.click({ target });
+            banner.listeners.click({ target });
         },
         consent: () => consent,
     };
@@ -43,14 +47,26 @@ function visit({ consent = null, id = 'G-TEST', blocked = false } = {}) {
 
 test('no tracking before consent; decline persists and settings reopen', () => {
     const page = visit();
-    assert.equal(page.dialog.open, true);
+    assert.equal(page.banner.hidden, false);
+    assert.equal(page.settings.hidden, false);
     assert.equal(page.scripts.length, 0);
     page.choice('denied');
-    assert.equal(page.dialog.open, false);
+    assert.equal(page.banner.hidden, true);
     assert.equal(page.consent(), 'denied');
     assert.equal(page.scripts.length, 0);
     page.settings.listeners.click();
-    assert.equal(page.dialog.open, true);
+    assert.equal(page.banner.hidden, false);
+});
+
+test('reopening from settings moves focus in, and a choice returns it', () => {
+    const page = visit({ consent: 'denied' });
+    assert.equal(page.banner.hidden, true);
+    page.settings.listeners.click();
+    assert.equal(page.firstButton.focused, 1);
+    page.choice('granted');
+    assert.equal(page.settings.focused, 1);
+    page.choice('denied');
+    assert.equal(page.settings.focused, 1, 'focus is only restored after a reopen');
 });
 
 test('accept, revoke, and accept again without duplicating the tag', () => {
@@ -67,18 +83,27 @@ test('accept, revoke, and accept again without duplicating the tag', () => {
     assert.equal(page.scripts.length, 1);
 });
 
-test('stored choices and disabled analytics', () => {
+test('stored choices are respected and unknown values ask again', () => {
     assert.equal(visit({ consent: 'granted' }).scripts.length, 1);
-    assert.equal(visit({ consent: 'denied' }).dialog.open, false);
-    assert.equal(visit({ consent: 'invalid' }).dialog.open, true);
-    const disabled = visit({ id: '' });
-    assert.equal(disabled.dialog.open, false);
-    assert.equal(disabled.settings.hidden, true);
-    assert.equal(disabled.scripts.length, 0);
+    assert.equal(visit({ consent: 'granted' }).banner.hidden, true);
+    assert.equal(visit({ consent: 'denied' }).banner.hidden, true);
+    assert.equal(visit({ consent: 'invalid' }).banner.hidden, false);
+});
+
+test('analytics stays inert without a banner or measurement id', () => {
+    const missing = visit({ bannerPresent: false });
+    assert.equal(missing.settings.hidden, true);
+    assert.equal(missing.scripts.length, 0);
+
+    const empty = visit({ id: '' });
+    assert.equal(empty.banner.hidden, true);
+    assert.equal(empty.settings.hidden, true);
+    assert.equal(empty.scripts.length, 0);
 });
 
 test('blocked storage does not prevent accepting or revoking', () => {
     const page = visit({ blocked: true });
+    assert.equal(page.banner.hidden, false);
     page.choice('granted');
     page.choice('denied');
     assert.equal(page.window['ga-disable-G-TEST'], true);

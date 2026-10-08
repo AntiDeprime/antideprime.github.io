@@ -1,58 +1,42 @@
-const THEME_KEY = 'theme';
-const DARK_THEME = 'dark';
-const LIGHT_THEME = 'light';
-const themeToggle = document.getElementById('theme-toggle');
+(() => {
+    const THEME_KEY = 'theme';
+    const root = document.documentElement;
+    const toggle = document.getElementById('theme-toggle');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-const readStoredTheme = () => {
-    try {
-        return localStorage.getItem(THEME_KEY);
-    } catch (error) {
-        return null;
+    if (!toggle) {
+        return;
     }
-};
 
-const writeStoredTheme = (theme) => {
-    try {
-        localStorage.setItem(THEME_KEY, theme);
-    } catch (error) {
-        // Ignore blocked storage; the current page state still updates.
-    }
-};
+    // data-theme is only present once a visitor has chosen; otherwise CSS follows the system.
+    const currentTheme = () => root.dataset.theme ?? (systemDark.matches ? 'dark' : 'light');
 
-const applyTheme = (isDark) => {
-    document.documentElement.classList.toggle('dark', isDark);
-    document.documentElement.style.colorScheme = isDark ? DARK_THEME : LIGHT_THEME;
+    const syncToggle = () => {
+        toggle.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
+    };
 
-    if (themeToggle) {
-        themeToggle.setAttribute('aria-pressed', String(isDark));
-        themeToggle.setAttribute(
-            'aria-label',
-            isDark ? 'Switch to light mode' : 'Switch to dark mode',
-        );
-    }
-};
-
-// The head-inlined script already applied the effective theme.
-applyTheme(document.documentElement.classList.contains(DARK_THEME));
-
-if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-        const isDark = !document.documentElement.classList.contains(DARK_THEME);
-        applyTheme(isDark);
-        writeStoredTheme(isDark ? DARK_THEME : LIGHT_THEME);
-    });
-}
-
-if (window.matchMedia) {
-    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    const onSystemChange = (event) => {
-        if (readStoredTheme() === null) {
-            applyTheme(event.matches);
+    // The static theme-color tags follow the system scheme; align them with a manual choice.
+    const syncBrowserColor = () => {
+        const color = getComputedStyle(document.body).backgroundColor;
+        for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
+            meta.content = color;
         }
     };
-    if (typeof darkScheme.addEventListener === 'function') {
-        darkScheme.addEventListener('change', onSystemChange);
-    } else if (typeof darkScheme.addListener === 'function') {
-        darkScheme.addListener(onSystemChange);
-    }
-}
+
+    toggle.hidden = false;
+    syncToggle();
+
+    toggle.addEventListener('click', () => {
+        const next = currentTheme() === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+            localStorage.setItem(THEME_KEY, next);
+        } catch {
+            // Ignore blocked storage; the choice still applies to this visit.
+        }
+        syncToggle();
+        syncBrowserColor();
+    });
+
+    systemDark.addEventListener('change', syncToggle);
+})();

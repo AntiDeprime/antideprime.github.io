@@ -3,7 +3,7 @@ import json
 import sys
 from pathlib import Path
 from typing import Any
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit
 from xml.sax.saxutils import escape
 
 import yaml
@@ -17,7 +17,6 @@ REQUIRED_FIELDS = (
     "assets",
     "seo",
     "analytics",
-    "layout",
     "social",
 )
 CONFIG_PATH = Path("config.yaml")
@@ -216,8 +215,8 @@ def write_search_metadata(config: dict[str, Any]) -> None:
                 "short_name": config["name"],
                 "start_url": "/",
                 "display": "minimal-ui",
-                "background_color": config["seo"]["background_color"],
-                "theme_color": config["seo"]["theme_color"],
+                "background_color": config["seo"]["theme_color"]["dark"],
+                "theme_color": config["seo"]["theme_color"]["dark"],
                 "icons": [
                     {
                         "src": f"/{config['assets']['icon_192']}",
@@ -239,27 +238,31 @@ def write_search_metadata(config: dict[str, Any]) -> None:
     )
 
 
+def render_index(config: dict[str, Any]) -> str:
+    """Render the page HTML from the template and validated configuration."""
+    template = setup_jinja().get_template(TEMPLATE_PATH.name)
+    site_url = config["seo"]["site_url"]
+    absolute_assets = {
+        key: absolute_url(value, site_url)
+        for key, value in config["assets"].items()
+        if isinstance(value, str)
+    }
+    social_links = enabled_social_links(config)
+    rendered_html = template.render(
+        **config,
+        site_host=urlsplit(site_url).hostname,
+        social_links=social_links,
+        absolute_assets=absolute_assets,
+        json_ld=build_json_ld(config, absolute_assets, social_links),
+    )
+    return "\n".join(line.rstrip() for line in rendered_html.splitlines()) + "\n"
+
+
 def generate_site() -> None:
     """Generate the static site from template and configuration."""
     try:
         config = load_config()
-        env = setup_jinja()
-        template = env.get_template(TEMPLATE_PATH.name)
-        site_url = config["seo"]["site_url"]
-        absolute_assets = {
-            key: absolute_url(value, site_url)
-            for key, value in config["assets"].items()
-            if isinstance(value, str)
-        }
-        social_links = enabled_social_links(config)
-        rendered_html = template.render(
-            **config,
-            social_links=social_links,
-            absolute_assets=absolute_assets,
-            json_ld=build_json_ld(config, absolute_assets, social_links),
-        )
-        html = "\n".join(line.rstrip() for line in rendered_html.splitlines()) + "\n"
-        OUTPUT_PATH.write_text(html, encoding="utf-8")
+        OUTPUT_PATH.write_text(render_index(config), encoding="utf-8")
         write_search_metadata(config)
         print(f"Successfully generated {OUTPUT_PATH}")
     except TemplateError as e:
