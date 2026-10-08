@@ -77,6 +77,16 @@ class RenderedPageTests(unittest.TestCase):
         for font in files:
             self.assertTrue(Path(font).is_file(), font)
 
+    def test_every_class_in_the_markup_is_styled(self):
+        css = Path("styles.css").read_text(encoding="utf-8")
+        styled = set(re.findall(r"\.([a-z][a-z0-9-]*)", css))
+        used = {
+            name
+            for _, attrs in self.page.tags
+            for name in (attrs.get("class") or "").split()
+        }
+        self.assertFalse(used - styled, used - styled)
+
     def test_preloaded_fonts_are_declared_in_the_stylesheet(self):
         css = Path("styles.css").read_text(encoding="utf-8")
         for link in self.page.find("link"):
