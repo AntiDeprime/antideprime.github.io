@@ -19,6 +19,13 @@ Y=$(((H - SIDE) / 2))
 # Square identity avatar: center-crop to a square and resize to 512.
 cwebp -quiet -q 88 -crop "$X" "$Y" "$SIDE" "$SIDE" -resize 512 512 "$SOURCE" -o "$ASSETS_DIR/avatar-512.webp"
 
+# Right-sized copy for the on-page portrait (displayed at 96 CSS px, so 256 covers 2x and 3x screens).
+ffmpeg -y -hide_banner -loglevel error \
+  -i "$SOURCE" \
+  -vf "crop=$SIDE:$SIDE:$X:$Y,scale=256:256:flags=lanczos" \
+  -frames:v 1 -c:v libwebp -quality 82 -map_metadata -1 \
+  "$ASSETS_DIR/avatar-256.webp"
+
 # Crop a wide social preview directly from the source and encode without EXIF/XMP.
 # The framing offsets are chosen for the current source photo.
 ffmpeg -y -hide_banner -loglevel error \

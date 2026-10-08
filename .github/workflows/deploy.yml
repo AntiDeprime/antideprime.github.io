@@ -38,19 +38,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
-
-      - name: Install Node dependencies
-        run: npm ci
 
       - name: Install image tooling
         run: sudo apt-get update && sudo apt-get install -y webp ffmpeg
 
       - name: Generate optimized assets
         run: ./scripts/build_assets.sh
-
-      - name: Build CSS
-        run: npm run build:css
 
       - name: Generate HTML
         run: uv run python generate.py
@@ -61,7 +54,7 @@ jobs:
           node --test tests/*.test.cjs
 
       - name: Ensure generated output is committed
-        run: git diff --exit-code -- index.html robots.txt sitemap.xml llms.txt site.webmanifest styles.css
+        run: git diff --exit-code -- index.html robots.txt sitemap.xml llms.txt site.webmanifest
 
       - name: Prepare Pages artifact
         if: github.event_name != 'pull_request'
