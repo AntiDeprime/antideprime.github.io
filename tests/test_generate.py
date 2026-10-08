@@ -1,11 +1,12 @@
 import json
+import tempfile
 import unittest
 from pathlib import Path
 from urllib.parse import urlsplit
 
 from jinja2 import UndefinedError
 
-from generate import build_json_ld, enabled_social_links, load_config, setup_jinja
+from generate import build_json_ld, enabled_social_links, load_config, setup_jinja, versioned_url
 
 
 class GeneratorTests(unittest.TestCase):
@@ -33,6 +34,16 @@ class GeneratorTests(unittest.TestCase):
     def test_configured_public_assets_exist(self):
         for asset in load_config()['assets'].values():
             self.assertTrue(Path(urlsplit(asset).path).is_file(), asset)
+
+    def test_versioned_url_changes_only_when_the_file_changes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'app.css'
+            path.write_text('a{color:red}', encoding='utf-8')
+            first = versioned_url(str(path))
+            self.assertEqual(first, versioned_url(str(path)))
+            path.write_text('a{color:blue}', encoding='utf-8')
+            self.assertNotEqual(first, versioned_url(str(path)))
+            self.assertTrue(first.startswith(f'{path}?v='))
 
 
 if __name__ == '__main__':

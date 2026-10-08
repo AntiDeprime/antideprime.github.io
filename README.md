@@ -4,7 +4,7 @@ This repository contains the source for my personal website: [alxy.sh](https://a
 
 The site is a small static profile page with links to my professional and contact profiles.
 It is plain HTML and one hand-written stylesheet (`styles.css`, no build step), set in the
-self-hosted Geist variable font (`assets/fonts/`, SIL Open Font License).
+self-hosted Geist and Geist Mono variable fonts (`assets/fonts/`, SIL Open Font License).
 The page follows the system light or dark scheme, and visitors can override it with the
 theme toggle; the choice is remembered in the browser.
 
@@ -31,8 +31,11 @@ photo from `src/profile.jpeg` unless another path is passed as the first argumen
 
 For content changes, edit `config.yaml`; for markup, edit `template.html`. Regenerate the
 HTML after either change and commit the generated files with the sources. `styles.css`,
-`theme.js` and `analytics.js` are maintained directly, not generated. The `seo.theme_color`
-pair in `config.yaml` must match the `--bg` token in `styles.css`; a test enforces this.
+`theme.js` and `analytics.js` are maintained directly, not generated, but `index.html` links
+them with a content hash (`styles.css?v=…`) so a deploy can never show new markup next to a
+cached old stylesheet; regenerate the HTML after editing any of the three. The
+`seo.theme_color` pair in `config.yaml` must match the `--bg` token in `styles.css`; a test
+enforces this.
 
 ## Validation and deployment
 

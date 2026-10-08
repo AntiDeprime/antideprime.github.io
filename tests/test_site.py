@@ -4,7 +4,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from generate import load_config, render_index
+from generate import load_config, render_index, versioned_url
 
 EXTERNAL_SCHEMES = ("http://", "https://", "mailto:", "data:", "#")
 
@@ -65,10 +65,22 @@ class RenderedPageTests(unittest.TestCase):
             if tag in {"link", "script", "img", "a"}:
                 references += [attrs.get(name) for name in ("href", "src")]
         local = [ref for ref in references if ref and not ref.startswith(EXTERNAL_SCHEMES)]
-        self.assertIn("styles.css", local)
-        self.assertIn("theme.js", local)
-        for ref in local:
-            self.assertTrue(Path(urlsplit(ref).path).is_file(), ref)
+        paths = [urlsplit(ref).path for ref in local]
+        self.assertIn("styles.css", paths)
+        self.assertIn("theme.js", paths)
+        for path in paths:
+            self.assertTrue(Path(path).is_file(), path)
+
+    def test_styles_and_scripts_are_versioned_by_content(self):
+        refs = [
+            attrs["href"] for attrs in self.page.find("link") if attrs.get("rel") == "stylesheet"
+        ] + [attrs["src"] for attrs in self.page.find("script") if attrs.get("src")]
+        self.assertEqual(
+            sorted(urlsplit(ref).path for ref in refs),
+            ["analytics.js", "styles.css", "theme.js"],
+        )
+        for ref in refs:
+            self.assertEqual(ref, versioned_url(urlsplit(ref).path))
 
     def test_stylesheet_font_files_exist(self):
         css = Path("styles.css").read_text(encoding="utf-8")
@@ -109,7 +121,7 @@ class RenderedPageTests(unittest.TestCase):
     def test_analytics_markup_is_present_when_enabled(self):
         self.assertIn('id="analytics-consent"', self.html)
         self.assertIn('data-measurement-id="G-', self.html)
-        self.assertIn('src="analytics.js"', self.html)
+        self.assertRegex(self.html, r'src="analytics\.js\?v=[0-9a-f]+"')
 
     def test_analytics_markup_disappears_when_disabled(self):
         config = load_config()
