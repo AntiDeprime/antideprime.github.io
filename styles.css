@@ -1,5 +1,5 @@
 /* alxy.sh: hand-written stylesheet, no build step.
-   Geist and Geist Mono are self-hosted variable fonts (SIL OFL, see assets/fonts/OFL.txt). */
+   Geist is a self-hosted variable font (SIL OFL, see assets/fonts/OFL.txt). */
 
 /* Geist latin-ext */
 @font-face {
@@ -18,26 +18,6 @@
   font-weight: 100 900;
   font-display: swap;
   src: url("assets/fonts/Geist-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* Geist Mono latin-ext */
-@font-face {
-  font-family: "Geist Mono";
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("assets/fonts/GeistMono-latin-ext.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* Geist Mono latin */
-@font-face {
-  font-family: "Geist Mono";
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("assets/fonts/GeistMono-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -100,10 +80,9 @@
     --fg: light-dark(#14171a, #e8edeb);
     --muted: light-dark(#575b5e, #9ba7a2);
     --line: light-dark(#d8d7d0, #252b2e);
-    --accent: light-dark(#9a5600, #f5b14c);
+    --accent: light-dark(#1d4ed8, #7aa2ff);
 
     --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
     --gutter: clamp(1.25rem, 5vw, 4rem);
     --radius: 0.5rem;
@@ -145,6 +124,7 @@
   }
 }
 
+
 /* ==========================================================================
    Components
    ========================================================================== */
@@ -169,16 +149,8 @@
   .site-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding-block: 1.25rem;
-  }
-
-  .brand {
-    font: 500 1rem / 1 var(--font-mono);
-
-    & span {
-      color: var(--accent);
-    }
+    justify-content: flex-end;
+    padding-block: 1rem;
   }
 
   .icon-button {
@@ -200,82 +172,55 @@
     flex: 1;
     display: grid;
     align-content: start;
-    gap: 1.5rem;
-    padding-block: 1.5rem 1rem;
+    gap: 2.5rem;
+    padding-block: 1.5rem 2rem;
   }
 
   .intro {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-areas:
-      "prompt  prompt"
-      "name    name"
-      "photo   facts"
-      "summary summary";
-    column-gap: 1rem;
-    align-items: center;
-  }
-
-  .prompt {
-    grid-area: prompt;
-    margin-block-end: 0.625rem;
-    color: var(--muted);
-    font: 400 0.875rem / 1.4 var(--font-mono);
-
-    & span {
-      color: var(--accent);
-    }
-  }
-
-  .name {
-    grid-area: name;
-    margin-block-end: 1.25rem;
-    font-size: clamp(2.5rem, 1.4rem + 4.6vw, 4.5rem);
-    font-weight: 600;
-    line-height: 1.05;
-    letter-spacing: -0.035em;
-    text-wrap: balance;
+    max-inline-size: 38rem;
   }
 
   .avatar {
-    grid-area: photo;
-    inline-size: 4.5rem;
-    block-size: 4.5rem;
+    inline-size: 5rem;
+    block-size: 5rem;
+    margin-block-end: 1.5rem;
     border: 1px solid var(--line);
-    border-radius: 0.375rem;
+    border-radius: 50%;
     object-fit: cover;
   }
 
-  .facts {
-    grid-area: facts;
-    display: grid;
-    gap: 0.125rem;
-    font: 400 0.875rem / 1.6 var(--font-mono);
+  .name {
+    font-size: clamp(2.125rem, 1.7rem + 2vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
 
-    & div {
-      display: flex;
-      gap: 0.875rem;
-    }
+  .role {
+    margin-block-start: 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
 
-    & dt {
-      flex: none;
-      inline-size: 2.5rem;
-      color: var(--muted);
-    }
+  .meta {
+    margin-block-start: 0.25rem;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  .summary {
+    margin-block-start: 1.5rem;
+    text-wrap: pretty;
   }
 
   .inline-link {
     color: var(--accent);
     text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
     text-decoration-thickness: 1px;
     text-underline-offset: 0.25em;
-  }
-
-  .summary {
-    grid-area: summary;
-    margin-block-start: 1.25rem;
-    max-inline-size: 38rem;
-    text-wrap: pretty;
   }
 
   /* ----- Links ----- */
@@ -290,23 +235,24 @@
 
     & a {
       display: grid;
-      grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
-      column-gap: 0.875rem;
-      min-block-size: 3.5rem;
-      padding-inline: 0.5rem;
+      column-gap: 1rem;
+      min-block-size: 4rem;
+      padding: 0.75rem 0.5rem;
       border-block-end: 1px solid var(--line);
       color: inherit;
-      font: 400 0.9375rem / 1.4 var(--font-mono);
       text-decoration: none;
 
-      /* Arrow drawn as a mask so it inherits the accent color, with no extra markup. */
+      /* Arrow drawn as a mask so it takes its color from a token, with no extra markup. */
       &::after {
         --arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E");
         content: "";
+        grid-column: 2;
+        grid-row: 1 / span 2;
         inline-size: 1rem;
         block-size: 1rem;
-        background-color: var(--accent);
+        background-color: var(--muted);
         -webkit-mask: var(--arrow) center / contain no-repeat;
         mask: var(--arrow) center / contain no-repeat;
       }
@@ -317,19 +263,22 @@
     }
   }
 
-  .links-key {
-    color: var(--muted);
-    font-size: 0.8125rem;
+  .links-name {
+    font-weight: 500;
+    line-height: 1.4;
   }
 
   .links-value {
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.4;
     overflow-wrap: anywhere;
   }
 
   /* ----- Footer and consent ----- */
 
   .site-footer {
-    padding-block-end: 1.25rem;
+    padding-block-end: 1rem;
   }
 
   .text-button {
@@ -338,7 +287,8 @@
     border: 0;
     background: none;
     color: var(--muted);
-    font: 400 0.8125rem / 1.4 var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.4;
     text-decoration: underline;
     text-underline-offset: 0.3em;
     cursor: pointer;
@@ -357,12 +307,14 @@
     box-shadow: 0 0.5rem 1.875rem rgb(0 0 0 / 0.25);
 
     & h2 {
-      margin-block-end: 0.375rem;
-      color: var(--muted);
-      font: 500 0.8125rem / 1.4 var(--font-mono);
+      margin-block-end: 0.25rem;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      line-height: 1.4;
     }
 
     & p {
+      color: var(--muted);
       font-size: 0.875rem;
       line-height: 1.5;
     }
@@ -425,11 +377,15 @@
     }
 
     .links a:hover {
-      background: color-mix(in srgb, var(--fg) 6%, transparent);
+      background: color-mix(in srgb, var(--fg) 5%, transparent);
+
+      &::after {
+        background-color: var(--accent);
+      }
     }
 
     .inline-link:hover {
-      text-decoration-thickness: 2px;
+      text-decoration-color: currentColor;
     }
 
     .text-button:hover {
@@ -438,7 +394,11 @@
   }
 
   .links a:focus-visible {
-    background: color-mix(in srgb, var(--fg) 6%, transparent);
+    background: color-mix(in srgb, var(--fg) 5%, transparent);
+
+    &::after {
+      background-color: var(--accent);
+    }
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -451,67 +411,53 @@
         border-color 0.15s,
         color 0.15s;
     }
+
+    .links a::after {
+      transition:
+        background-color 0.15s,
+        transform 0.15s;
+    }
+
+    @media (hover: hover) {
+      .links a:hover::after {
+        transform: translate(0.125rem, -0.125rem);
+      }
+    }
   }
 
   /* ----- Wide screens: introduction on the left, links on the right ----- */
 
   @media (width >= 64rem) {
     .profile {
-      grid-template-columns: minmax(0, 1fr) minmax(20rem, 25rem);
-      align-items: end;
-      column-gap: clamp(3rem, 7vw, 5rem);
-      padding-block: 2.5rem 2rem;
-    }
-
-    .intro {
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-areas:
-        "photo"
-        "prompt"
-        "name"
-        "facts"
-        "summary";
-      align-items: start;
+      grid-template-columns: minmax(0, 1fr) minmax(20rem, 26rem);
+      align-content: center;
+      align-items: center;
+      column-gap: clamp(3rem, 8vw, 6rem);
+      padding-block: 1rem 4rem;
     }
 
     .avatar {
-      inline-size: 6rem;
-      block-size: 6rem;
+      inline-size: 7rem;
+      block-size: 7rem;
       margin-block-end: 2rem;
-      border-radius: 0.375rem;
     }
 
-    .prompt {
-      margin-block-end: 0.75rem;
-      font-size: 0.9375rem;
+    .role {
+      margin-block-start: 1rem;
+      font-size: 1.25rem;
     }
 
-    .name {
-      margin-block-end: 1.75rem;
-    }
-
-    .facts {
-      font-size: 0.9375rem;
-
-      & div {
-        gap: 1.5rem;
-      }
-
-      & dt {
-        inline-size: 3.5rem;
-      }
+    .meta {
+      font-size: 1rem;
     }
 
     .summary {
       margin-block-start: 1.75rem;
-      font-size: 1.25rem;
-      letter-spacing: -0.005em;
+      font-size: 1.125rem;
     }
 
     .links a {
-      grid-template-columns: 4.75rem minmax(0, 1fr) auto;
-      column-gap: 1.25rem;
-      min-block-size: 3.75rem;
+      min-block-size: 4.25rem;
       padding-inline: 0.75rem;
     }
   }

@@ -40,7 +40,7 @@ analytics:
   google_measurement_id: "G-JWD1WMJEDF"
 
 # Theme & Styling
-# Colors and the self-hosted Geist typefaces live in styles.css. The theme_color
+# Colors and the self-hosted Geist typeface live in styles.css. The theme_color
 # values above must match the page background tokens there.
 
 # Social Links
