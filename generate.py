@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -71,6 +72,17 @@ def setup_jinja(template_path: str = ".") -> Environment:
         autoescape=select_autoescape(("html", "xml")),
         undefined=StrictUndefined,
     )
+
+
+def versioned_url(path: str) -> str:
+    """Return a local file URL that changes whenever the file's content does.
+
+    GitHub Pages lets browsers and its CDN reuse files for ten minutes, so a plain
+    `styles.css` can be served stale next to freshly deployed HTML. A content hash in the
+    query string makes every deploy that changes the file a new URL.
+    """
+    digest = hashlib.sha256(Path(path).read_bytes()).hexdigest()[:10]
+    return f"{path}?v={digest}"
 
 
 def absolute_url(value: str, site_url: str) -> str:
@@ -253,6 +265,7 @@ def render_index(config: dict[str, Any]) -> str:
         site_host=urlsplit(site_url).hostname,
         social_links=social_links,
         absolute_assets=absolute_assets,
+        versioned_url=versioned_url,
         json_ld=build_json_ld(config, absolute_assets, social_links),
     )
     return "\n".join(line.rstrip() for line in rendered_html.splitlines()) + "\n"

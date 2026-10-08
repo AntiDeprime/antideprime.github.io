@@ -31,8 +31,11 @@ photo from `src/profile.jpeg` unless another path is passed as the first argumen
 
 For content changes, edit `config.yaml`; for markup, edit `template.html`. Regenerate the
 HTML after either change and commit the generated files with the sources. `styles.css`,
-`theme.js` and `analytics.js` are maintained directly, not generated. The `seo.theme_color`
-pair in `config.yaml` must match the `--bg` token in `styles.css`; a test enforces this.
+`theme.js` and `analytics.js` are maintained directly, not generated, but `index.html` links
+them with a content hash (`styles.css?v=…`) so a deploy can never show new markup next to a
+cached old stylesheet; regenerate the HTML after editing any of the three. The
+`seo.theme_color` pair in `config.yaml` must match the `--bg` token in `styles.css`; a test
+enforces this.
 
 ## Validation and deployment
 

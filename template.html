@@ -52,11 +52,11 @@
             }
         } catch {}
     </script>
-    <link rel="stylesheet" href="styles.css">
-    <script src="theme.js" defer></script>
+    <link rel="stylesheet" href="{{ versioned_url('styles.css') }}">
+    <script src="{{ versioned_url('theme.js') }}" defer></script>
 {%- if analytics.google_measurement_id %}
     <!-- Google Analytics loads only after explicit consent; see analytics.js -->
-    <script src="analytics.js" defer></script>
+    <script src="{{ versioned_url('analytics.js') }}" defer></script>
 {%- endif %}
     <script type="application/ld+json">
         {{ json_ld | tojson }}
